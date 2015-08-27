@@ -1,0 +1,351 @@
+Content-Type: multipart/related; start=<op.mhtml.1387268701257.a1d2e24c18782cb2@192.168.1.104>; boundary=----------Uoc6Tp7JIr09boA7h1tzgC
+Content-Location: http://chenpro.com/Comp_Virus/structure_of_disk.htm
+Subject: =?utf-8?Q?Structure=20of=20Disk?=
+MIME-Version: 1.0
+
+------------Uoc6Tp7JIr09boA7h1tzgC
+Content-Disposition: inline; filename=structure_of_disk.htm
+Content-Type: text/html; charset=windows-1252; name=structure_of_disk.htm
+Content-ID: <op.mhtml.1387268701257.a1d2e24c18782cb2@192.168.1.104>
+Content-Location: http://chenpro.com/Comp_Virus/structure_of_disk.htm
+Content-Transfer-Encoding: 8bit
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Structure of Disk</title>
+</head>
+
+<body background="images/blutextb.gif">
+
+<h1 align="center"><tt><u><b>STRUCTURE OF DISK</b></u></tt></h1>
+<p align="center"><a href="../computer_virus.htm">Back</a></p>
+<p><br>
+<tt>&nbsp;&nbsp;&nbsp; The dos diskette is divided into four major areas, they
+are</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; 1. Boot area&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(System area)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; 2. FAT area&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(System area)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; 3. Root directory area&nbsp;&nbsp;&nbsp;&nbsp; (System
+area)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; 4. Data area</tt><br>
+&nbsp;
+<p><tt>&nbsp;&nbsp;&nbsp; <u>1.BOOT AREA:</u></tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The boot
+area is a the first sector on the disk which holds the instructions associated
+with booting of the computer. Normally a diskette has its boot records in its
+very first sector (sector - 1, head - 0, track -0). You can see the instructions
+in the boot sector using diagonistic software such as PC TOOLS, debug ,etc,. You
+can use the DEBUG utility provided with DOS to load the boot sector. To load the
+boot sector follow these simple steps.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; step 1. c:\dos&gt;DEBUG&nbsp;&nbsp;&nbsp;
+(enter)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; step 2. -L 100 0 0 1&nbsp;&nbsp;&nbsp;
+(enter)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; step 3. -u 100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(enter)</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Normally the boot sector is 512 bytes in size. The boot sector is otherwise
+called as DOS BOOT RECORD (DBR). The boot sector is subdivided into two major
+sections. They are</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.
+Bios Parameter Block (BPB)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Boot
+instructions</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.BPB (Bios Parameter Block)</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The bios parameter block holds some of the important information about the disk
+like bytes per sector, sectors per track, sectors in boot record ,etc,. These
+informations are useful in manuplating the disk. Note that the information is
+just a data part of the boot record the control is transfered to the boot
+instruction before the BPB via a JMP instruction. See <u><a href="http://ismail.4mg.com/disk/bpbstru.html">BPB
+structure</a></u> for more details.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.Boot instructions</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+This part is the executable part of the boot record. It is responsible for the
+setting up of operating system and it plays an important role in the system boot
+up sequence. I will not be dealing boot instructions in depth which is beyond
+the scope of this discussion.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; In harddisks in addition to DOS BOOT RECORD (DBR) it
+has MASTER BOOT RECORD (MBR) which holds the partition information. Diskettes do
+not have MBRs. The physical location of MBR and DBR is given below.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <u>Floppy</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<u>Harddisk</u></tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DBR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+track 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+track 0</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sector 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sector 1</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+head 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+head 1</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MBR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+----&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+track 0</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sector 1</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+head 0</tt>
+<p><tt><u>How to find the number of sectors in boot area ?</u></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The number of sectors used by boot area is found by
+checking the BPB. The BPB has a field in which the number of sectors in boot is
+stored. Normally its count is one. See <u><a href="http://ismail.4mg.com/disk/bpbstru.html">BPB
+structure</a></u> for more details.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; <u>2.FAT AREA:</u></tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The FAT
+(File Allocation Table) is important area inside a disk. It is the address book
+of the disk. The information which are stored on the disk is identified with the
+help of FAT. If you are familiar with data structures then the structure of FAT
+will be more clear to you.</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FAT is a
+group of dedicated sectors holding the information about how the data inside the
+disk is organised. Normally there are two copies of the same FAT because if one
+of the FAT is corrupted then the other may be used.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; STRUCTURE OF FAT :</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; There are
+three types of FAT, they are</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1. FAT12</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2. FAT16</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3. FAT32</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+These three FATs can be seen in plenty, so the discussion will be appropriate if
+we deal with these three. Basically, if you are clear with FAT12 then I suppose
+that FAT16 and FAT32 will not be difficult</tt><br>
+<tt>at all. I will not be dealing with FAT32 here because I think that FAT12 and
+FAT16 will serve the purpose.</tt>
+<p><tt>FAT12:</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; FAT 12 is the File Allocation Table scheme used in the
+diskettes. The 12 at the end specifies the number of bits used for representing
+a cluster. So for FAT12 a cluster is represented by 12 bits in the FAT entry and
+for FAT16 a cluster is represented by 16 bits in the FAT entry. Same is the case
+with FAT32. Each entry in the FAT represents a cluster number. Note that the
+cluster numbering order starts from 2 and not 0. So the first cluster in a disk
+is cluster number 2. The first entry (byte) in the FAT is the media discriptor
+which varies according to the type of diskette used. For a fixed drive it is F8h
+and for 1.44M floppy it is F0h. The next two bytes are FFh. The structure of FAT
+is more clearly shown below.</tt><br>
+&nbsp;
+<p><tt>&nbsp;1. Boot record.</tt>
+<p><tt>&nbsp;2. FAT (2 copies of FAT the two copies will be identical.)</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; First copy of FAT</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F0&nbsp; FF&nbsp; FF&nbsp; &lt;--------- Cluster
+information starts ----------&gt;</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp;
+..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp;
+..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp;
+..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Second copy of FAT</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F0&nbsp; FF&nbsp; FF&nbsp; &lt;--------- Cluster
+information starts ----------&gt;</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp;
+..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp;
+..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp;
+..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..&nbsp; ..</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Note that F0h represents the media descriptor and it
+varies according to diskette type. The following two bytes are FFh. From the
+fifth byte onwards the cluster 2 information starts.</tt>
+<p><tt>&nbsp;3. Root directory.</tt>
+<p><tt>&nbsp;4. Data area.</tt>
+<p><tt><u>How cluster information is stored in the FAT ?</u></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The cluster information is similar to a linked list.
+Each FAT entry represents the next cluster in the cluster chain. For example</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F0&nbsp; FF&nbsp; FF&nbsp; 03&nbsp; 40&nbsp; 00&nbsp;
+..&nbsp; ..&nbsp;&nbsp;&nbsp;&nbsp; --&gt; FAT12</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cluster 2 information</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F8&nbsp; FF&nbsp; FF&nbsp; <u>00&nbsp; 0300&nbsp; 04</u>&nbsp;
+..&nbsp; ..&nbsp; --&gt; FAT16</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cluster 2 information</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; From the above cluster 2 information we can see that
+the after reading cluster 2 we should read cluster 3 and then cluster 4. To
+understand the FAT entry consider the FAT16 example. Each underlined item
+represents a entry in FAT. In the cluster 2 entry we have 0003. So it implyies
+after cluster 2 comes the cluster 3, but on cluster 3 entry we have 0004 so
+after cluster 3 comes the cluster 4 and so on. Since we deal with FAT16 note
+that each FAT entry has 2 bytes (16 bits).</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; FAT16 is easy to understand but FAT12 is a bit difficult.
+All diskettes have FAT12 scheme. Consider the previous FAT12 example</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F0&nbsp; FF&nbsp; FF&nbsp; 03&nbsp; 40&nbsp; 00&nbsp;
+..&nbsp; ..&nbsp;&nbsp;&nbsp;&nbsp; --&gt; FAT12</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cluster 2 information</tt>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <tt>Since we deal with FAT12 12 bits represent a
+cluster. To get the Cluster 2 entry swap the cluster 2 entry and the cluster 3
+entry so after swapping the bytes we get, 4<u>0 03</u>. Since the cluster number
+is even only conider the last 12 bits (underlined) which is 003. Hence the
+cluster 2 points to cluster 3. Similarly to get cluster 3 entry swap cluster 3
+entry and the next entry so we get <u>00 4</u>0. Since the cluster number is odd
+consider only the first 12 bits which is 004. Hence cluster 3 points to cluster
+4.</tt>
+<p><tt>&nbsp;&nbsp; In general, for FAT12 swap the adjecent FAT entry bytes,
+check if the cluster number is even or odd, if even then AND the swaped entry
+bytes with FFFh else if odd then shift right (logical shift) the swaped entry
+bytes by 4 bits. By doing this algorithm you can get the next cluster number
+from a FAT entry.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; FAT16 is much simple. Every two bytes represent a
+cluster information so there is no need to play with the bits. Just read the two
+bytes and do your own manuplation. In C the int data type (2 bytes) will be
+ideal for this case.</tt>
+<p><tt><u>How to find the correct FAT entry byte given a cluster number ?</u></tt>
+<p>&nbsp;&nbsp;&nbsp; <tt>In FAT12 three bytes hold information about two
+clusters so multiply the given cluster number by 3/2. The result may cross over
+the total FAT entries available. Hence if the result is even then AND the result
+with FFFh else shift right (logical shift) the result by 4 bits. Now, the final
+result is got this result repersents the offset from the first byte of the FAT
+entry to the required FAT entry byte. An example will explain it more clearly.
+Consider the given cluster number is 2.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; step 1 : Multiply by (3/2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-&gt;&nbsp; (3/2) * 2 = 3</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; step 2 : Even cluster so &amp; FFFh&nbsp; -&gt;&nbsp; 3
+&amp; FFFh = 3</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; step 3 : Offset from first byte of FAT = 3</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; So the cluster 2 FAT entry byte can be found after
+skipping 3 bytes form the first byte of the FAT. This is shown below.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F0&nbsp; FF&nbsp; FF&nbsp; 03&nbsp; 40&nbsp; 00&nbsp;
+..&nbsp; ..&nbsp;&nbsp;&nbsp;&nbsp; --&gt; FAT12</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; Skip 3 bytes ^</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cluster 2 information</tt>
+<p><tt>&nbsp;In FAT16</tt>&nbsp; <tt>2 bytes hold information about one cluster
+so just multiply the cluster number by 2 and use the result as the offset from
+start of FAT. So FAT16 is easier to manuplate than FAT12.</tt>
+<p><tt><u>How to find the number of sectors in FAT ?</u></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The number of sectors in FAT varies according to the
+diskette type. The BPB holds information about how many copies of FAT is present
+(Normally 2) and it also holds information about how many sectors are present in
+each FAT copy. So you can easily calcuate the total sectors present in the FAT
+copies which is given below.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Number of sectors in FAT = Number of FAT copies *
+Number of sectors</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(See <u><a href="http://ismail.4mg.com/disk/bpbstru.html">BPB structure</a></u>)&nbsp;&nbsp;&nbsp;
+in one FAT copy</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(See <u><a href="http://ismail.4mg.com/disk/bpbstru.html">BPB structure</a></u>)</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; <u>3.ROOT DIRECTORY AREA:</u></tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The root directory area is another important system area in the diskette. It is
+the last system area of the disk. It contains the root directory's file(s)
+name(s) and directory name(s) and its internal details (similar to a table).
+Each entry in the root area is 32 bytes long. Within these 32 bytes contains the
+file/subdirectory name, the size of the file (0 if its a subdirectory), the
+starting cluster number of the file/subdirectory. Note that the entries in the
+root directory area contain information about only the root directory's file
+names and the root directory's subdirectory's name. For a file entry the
+starting cluster will point to the first cluster of the file contents. The
+successive clusters can be obtained by manuplating the FAT entries which is
+discussed in the above section. For a subdirectory entry the starting cluster
+denotes to another table of contents very similar to the root directory
+structure. It is important to note that this subdirectory table lies on the data
+area. After this root directory area comes the data area.</tt>
+<p><tt><u>How to find the number of sectors in root directory area ?</u></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Normally each entry in the root directory area is 32
+bytes long. The maximum number of root directory entries can be obtained from
+the boot sector's BPB(Bios Parameter Block discussed in Boot area). Now to
+calculate the total sectors in the root directory apply the following formula.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Number of sectors in&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Maximum number of</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; root directory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+=&nbsp;&nbsp;&nbsp; 32&nbsp; *&nbsp;&nbsp; root directory entries&nbsp; /512</tt><br>
+<tt>&nbsp;&nbsp;&nbsp; area&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(See <u><a href="http://ismail.4mg.com/disk/bpbstru.html">BPB structure</a></u>)</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The above formula is fairly simple. 32 denotes the
+number of bytes for each entry which is constant, 512 denotes the sector size
+which is mostly 512 bytes. Thus the number of sectors in the root area is
+calculated.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; <u>4.DATA AREA:</u></tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After the
+root directory area finishes comes the data area. This area dose not come under
+system area because it dose not hold system information. The data area holds the
+actual file contents and subdirectory entry tables in form of clusters. The
+first cluster number in the data area is cluster 2 which is immediatly after the
+root directory area. Any damage in the data area can be fixed by marking that
+area as bad in FAT. There no much technical information about data area execpt
+that it holds the actual contents of the diskette.</tt>
+<p><tt><u>How to mark a bad cluster in the FAT ?</u></tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; we've discussed that FAT holds
+information about each and every cluster, so a bad cluster can be marked by
+changing the contents of the FAT entry corresponding to the cluster number. We
+know how to find the correct FAT entry byte given the cluster number. Now change
+the FAT entry to FF7h for FAT12 or FFF7h for FAT16. The change will look like
+this shown below</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F0&nbsp; FF&nbsp; FF&nbsp; f7&nbsp; 7f&nbsp; ff&nbsp;
+..&nbsp; ..&nbsp;&nbsp;&nbsp;&nbsp; --&gt; FAT12</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cluster 2 information</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; F8&nbsp; FF&nbsp; FF&nbsp; <u>ff&nbsp; f7ff&nbsp; f7</u>&nbsp;
+..&nbsp; ..&nbsp; --&gt; FAT16</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt><br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cluster 2 information</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; From the above examples for FAT12 and FAT16 it is
+clear that cluster 2 and 3 are bad clusters since the FAT entry bytes are FF7h
+for FAT12 and FFF7h for FAT16.</tt><br>
+&nbsp;
+<p><tt>General information :</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Any damage in the data area can be fixed by marking it
+bad in the FAT but is any system area is damaged then the problem is serious.
+The disk may become unusable.</tt><br>
+&nbsp;</p>
+<p align="center"><a href="../computer_virus.htm">Back</a></p>
+<hr>
+<p align="center">&nbsp;</p>
+
+</body>
+
+</html>
+
+------------Uoc6Tp7JIr09boA7h1tzgC
+Content-Disposition: inline; filename=blutextb.gif
+Content-Type: image/gif; name=blutextb.gif
+Content-Location: http://chenpro.com/Comp_Virus/images/blutextb.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODlhdABuAPABAMz//////yH/C01TT0ZGSUNFOS4wDQAAAAFzUkdCAK7OHOkA
+If8LTVNPRkZJQ0U5LjAYAAAADG1zT1BNU09GRklDRTkuMALxmbSWACH/C01TT0ZG
+SUNFOS4wGAAAAAxjbVBQSkNtcDA3MTICAAAIddtivwAsAAAAAHQAbgAAAv+Mj4mg
+7e8YnPTIit/NfPVvbGAmjlVpQmiqsaR7wrE8rXR4q3m7K3b+uwVlQ2KvUXQllUdf
+0/O0RKXTJcuawo602ymu6g1wQeNO2Rw+v7zqdbSNgc/e6TqYbafj93oz4A8YKDhI
+WGh4iJiouHhIlvckRxFZw9dn2TSpU4n5SGmSGdHJeUd6eQQaunkquloKybqDigQL
+RFvrOorbI+ukumsr5PsrfKs7bNpqXIx8/Eq8nMsc+xxMbWR9LQ0dzd1Ns8ELpfwt
+hg0TLu48Xq3N3p79Du/drF5vP7+dHM9kzr/v/y8LGUYECxo8iLDRB3RUAgrs93Ad
+OYny8Lm7p8/iRY2rFTNyPAdsosNPIUFCjIiR3keAKadRNPnySkmYLfOpvInT5cgu
+J3nGlPkTZU2RQmf1dHQU6U6lS9EkXfjUaVCfTaUOJXqVZlatHrvm3OhV51aWK4FO
+pVrWbFU3a9mmLRoWrKSEdOvavct0LNyvcm2K1UsyKgeG5QS7jdvXb+LFWBE3dswV
+cuS/bwO3jTNTLWDLm9FWzvsZNN/HoydTlqw5NNSzokuTRZ3adYICADs=
+
+------------Uoc6Tp7JIr09boA7h1tzgC--

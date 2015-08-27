@@ -1,0 +1,4 @@
+
+code segment
+xor ax, ax
+code end

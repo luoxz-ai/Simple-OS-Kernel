@@ -1,0 +1,13 @@
+Turbo Assembler  Version 3.0  Copyright (c) 1988, 1991 Borland International
+
+Assembling file:   loader.asm
+*Warning* loader.asm(43) Argument needs type override
+*Warning* loader.asm(45) Argument needs type override
+*Warning* loader.asm(202) Argument needs type override
+*Warning* loader.asm(204) Argument needs type override
+*Warning* loader.asm(605) Argument needs type override
+Error messages:    None
+Warning messages:  5
+Passes:            1
+Remaining memory:  418k
+

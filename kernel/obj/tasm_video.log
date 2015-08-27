@@ -1,0 +1,9 @@
+Turbo Assembler  Version 3.0  Copyright (c) 1988, 1991 Borland International
+
+Assembling file:   .\obj\video.asm
+*Warning* .\obj\video.asm(413) Argument needs type override
+Error messages:    None
+Warning messages:  1
+Passes:            1
+Remaining memory:  415k
+

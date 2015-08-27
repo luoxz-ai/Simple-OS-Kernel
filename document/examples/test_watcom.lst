@@ -1,0 +1,179 @@
+Module: D:\ASM\OS_2013_12\document\examples\test_watcom.c
+GROUP: 'DGROUP' CONST,CONST2,_DATA,_BSS
+
+Segment: test_watcom_TEXT BYTE USE16 00000031 bytes
+
+
+#include <stdio.h>
+
+unsigned char zero_r = 0;
+unsigned int zero_l;
+
+char sign_r = 0;
+int sign_l;
+
+void main()
+0000                          main_:
+0000    B8 12 00                  mov         ax,0x0012 
+0003    9A 00 00 00 00            call        __STK 
+0008    53                        push        bx 
+0009    51                        push        cx 
+000A    52                        push        dx 
+000B    56                        push        si 
+000C    57                        push        di 
+000D    55                        push        bp 
+000E    89 E5                     mov         bp,sp 
+0010    81 EC 02 00               sub         sp,0x0002 
+
+{
+    zero_l = zero_r;
+0014                          L$1:
+0014    36 A0 00 00               mov         al,byte ptr ss:_zero_r 
+0018    30 E4                     xor         ah,ah 
+001A    36 A3 00 00               mov         word ptr ss:_zero_l,ax 
+
+    sign_l = sign_r;
+001E    36 A0 00 00               mov         al,byte ptr ss:_sign_r 
+0022    30 E4                     xor         ah,ah 
+0024    36 A3 00 00               mov         word ptr ss:_sign_l,ax 
+
+    
+    return;
+}
+0028                          L$2:
+0028    89 EC                     mov         sp,bp 
+002A    5D                        pop         bp 
+002B    5F                        pop         di 
+002C    5E                        pop         si 
+002D    5A                        pop         dx 
+002E    59                        pop         cx 
+002F    5B                        pop         bx 
+0030    CB                        retf        
+0031                          L$3:
+
+Routine Size: 49 bytes,    Routine Base: test_watcom_TEXT + 0000
+
+No disassembly errors
+
+Segment: CONST WORD USE16 00000000 bytes
+
+Segment: CONST2 WORD USE16 00000000 bytes
+
+Segment: _DATA WORD USE16 00000002 bytes
+0000                          _zero_r:
+0000    00                                              .
+0001                          _sign_r:
+0001    00                                              .
+
+Segment: _BSS WORD USE16 00000004 bytes
+0000                          _sign_l:
+0002                          _zero_l:
+
+BSS Size: 4 bytes
+
+Segment: .debug_info BYTE USE32 00000198 bytes
+0000                          L$4:
+0000    94 01 00 00 02 00                               ......
+0006    00 00 00 00                                     DD	offset L$6
+000A    02 06 97 01 00 00 44 3A 5C 41 53 4D 5C 4F 53 5F ......D:\ASM\OS_
+001A    32 30 31 33 5F 31 32 5C 64 6F 63 75 6D 65 6E 74 2013_12\document
+002A    5C 65 78 61 6D 70 6C 65 73 5C 74 65 73 74 5F 77 \examples\test_w
+003A    61 74 63 6F 6D 2E 63 00                         atcom.c.
+0042    00 00 00 00                                     DD	offset L$5
+0046    01 00 56 31 2E 30 20 57 41 54 43 4F 4D 00 00    ..V1.0 WATCOM..
+0055    00 00 00 00                                     DD	offset L$7
+0059    00 00 00 00 05                                  .....
+005E    04 00 00 00                                     DD	offset L$8
+0062    09 63 68 61 72 00 08 01 09 73 69 67 6E 65 64 20 .char....signed 
+0072    63 68 61 72 00 06 01 09 75 6E 73 69 67 6E 65 64 char....unsigned
+0082    20 63 68 61 72 00 08 01 09 73 68 6F 72 74 00 05  char....short..
+0092    02 09 75 6E 73 69 67 6E 65 64 20 73 68 6F 72 74 ..unsigned short
+00A2    00 07 02 09 69 6E 74 00 05 02 09 75 6E 73 69 67 ....int....unsig
+00B2    6E 65 64 20 69 6E 74 00 07 02 09 6C 6F 6E 67 00 ned int....long.
+00C2    05 04 09 75 6E 73 69 67 6E 65 64 20 6C 6F 6E 67 ...unsigned long
+00D2    00 07 04 09 5F 5F 69 6E 74 36 34 00 05 08 09 75 ....__int64....u
+00E2    6E 73 69 67 6E 65 64 20 5F 5F 69 6E 74 36 34 00 nsigned __int64.
+00F2    07 08 09 5F 42 6F 6F 6C 00 07 01 D3 01 01 03 0A ..._Bool........
+0102    00 00                                           DW	seg _sign_l
+0104    01 00 73 69 67 6E 5F 6C 00 03 03                ..sign_l...
+010F    00 00                                           DW	offset _sign_l
+0111    A5 00 00 00 D3 01 01 03 0A                      .........
+011A    00 00                                           DW	seg _zero_l
+011C    01 00 7A 65 72 6F 5F 6C 00 03 03                ..zero_l...
+0127    00 00                                           DW	offset _zero_l
+0129    AC 00 00 00 D3 01 01 03 0A                      .........
+0132    00 00                                           DW	seg _sign_r
+0134    01 00 73 69 67 6E 5F 72 00 03 03                ..sign_r...
+013F    00 00                                           DW	offset _sign_r
+0141    62 00 00 00 D3 01 01 03 0A                      b........
+014A    00 00                                           DW	seg _zero_r
+014C    01 00 7A 65 72 6F 5F 72 00 03 03                ..zero_r...
+0157    00 00                                           DW	offset _zero_r
+0159    79 00 00 00 09 76 6F 69 64 00 07 00 88 01 96 01 y....void.......
+0169    00 00 01 5D 01 00 00 14 03 0A                   ...]......
+0173    00 00                                           DW	seg main_
+0175    6D 61 69 6E 00 01 00 01 01 00 00 02 91 0C       main..........
+0183    00 00                                           DW	offset main_
+0185    31 00                                           DW	offset L$3
+0187    02 02 90 21 66 95 01 00 00                      ...!f....
+0190    14 00                                           DW	offset L$1
+0192    28 00                                           DW	offset L$2
+0194    00 00 00 00                                     ....
+
+Segment: .debug_pubnames BYTE USE32 00000047 bytes
+0000    43 00 00 00 02 00                               C.....
+0006    00 00 00 00                                     DD	offset L$4
+000A    31 00 00 00 FD 00 00 00 73 69 67 6E 5F 6C 00 15 1.......sign_l..
+001A    01 00 00 7A 65 72 6F 5F 6C 00 2D 01 00 00 73 69 ...zero_l.-...si
+002A    67 6E 5F 72 00 45 01 00 00 7A 65 72 6F 5F 72 00 gn_r.E...zero_r.
+003A    65 01 00 00 6D 61 69 6E 00 00 00 00 00          e...main.....
+
+Segment: .debug_aranges BYTE USE32 00000024 bytes
+0000    20 00 00 00 02 00                                .....
+0006    00 00 00 00                                     DD	offset L$4
+000A    02 02                                           ..
+000C    00 00                                           DW	offset main_
+000E    00 00                                           DW	seg main_
+0010    31 00                                           1.
+0012    00 00                                           DW	offset DGROUP:_zero_r
+0014    00 00                                           DW	seg DGROUP:_zero_r
+0016    02 00                                           ..
+0018    00 00                                           DW	offset DGROUP:_sign_l
+001A    00 00                                           DW	seg DGROUP:_sign_l
+001C    04 00 00 00 00 00 00 00                         ........
+
+Segment: .debug_line BYTE USE32 0000006A bytes
+0000                          L$5:
+0000    66 00 00 00 02 00 10 00 00 00 01 00 FF 04 0A 00 f...............
+0010    01 01 01 01 00 00 00 00 00 00 00 36 03 44 3A 5C ...........6.D:\
+0020    41 53 4D 5C 4F 53 5F 32 30 31 33 5F 31 32 5C 64 ASM\OS_2013_12\d
+0030    6F 63 75 6D 65 6E 74 5C 65 78 61 6D 70 6C 65 73 ocument\examples
+0040    5C 74 65 73 74 5F 77 61 74 63 6F 6D 2E 63 00 00 \test_watcom.c..
+0050    00 00 00 03 02                                  .....
+0055    00 00                                           DW	offset main_
+0057    00 03 04                                        ...
+005A    00 00                                           DW	seg main_
+005C    06 05 01 03 09 01 5D 34 03 03 33 00 01 01       ......]4..3...
+
+Segment: .debug_loc BYTE USE32 00000000 bytes
+
+Segment: .debug_abbrev BYTE USE32 00000070 bytes
+0000                          L$6:
+0000    06 11 01 01 13 03 08 10 06 13 0F 1B 08 25 08 42 .............%.B
+0010    0F 43 06 35 10 82 41 0B 83 41 06 00 00 09 24 00 .C.5..A..A....$.
+0020    03 08 3E 0B 0B 0B 00 00 D3 01 34 00 32 0B 46 0A ..>.......4.2.F.
+0030    3F 0C 34 0C 03 08 02 0A 49 13 00 00 88 01 2E 01 ?.4.....I.......
+0040    01 13 32 0B 49 13 2C 0F 46 0A 03 08 3F 0C 20 0B ..2.I.,.F...?. .
+0050    36 0B 27 0C 4C 0B 34 0C 2A 0A 11 01 12 01 33 0B 6.'.L.4.*.....3.
+0060    40 0A 00 00 66 0B 01 01 13 11 01 12 01 00 00 00 @...f...........
+
+Segment: .debug_macinfo BYTE USE32 00000001 bytes
+0000                          L$7:
+0000    00                                              .
+
+Segment: .debug_str BYTE USE32 00000000 bytes
+
+Segment: .WATCOM_references BYTE USE32 00000004 bytes
+0000    00 00 00 00                                     ....
+0004                          L$8:
+

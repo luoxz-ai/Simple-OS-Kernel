@@ -1,0 +1,13 @@
+Turbo Assembler  Version 3.0  Copyright (c) 1988, 1991 Borland International
+
+Assembling file:   .\obj\process.asm
+*Warning* .\obj\process.asm(401) Argument needs type override
+*Warning* .\obj\process.asm(403) Argument needs type override
+*Warning* .\obj\process.asm(405) Argument needs type override
+*Warning* .\obj\process.asm(407) Argument needs type override
+*Warning* .\obj\process.asm(409) Argument needs type override
+Error messages:    None
+Warning messages:  5
+Passes:            1
+Remaining memory:  417k
+

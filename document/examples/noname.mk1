@@ -1,0 +1,16 @@
+!define BLANK ""
+D:\ASM\OS_2013_12\document\examples\test_watcom.obj : D:\ASM\OS_2013_12\docu&
+ment\examples\test_watcom.c .AUTODEPEND
+ @D:
+ cd D:\ASM\OS_2013_12\document\examples
+ *wcc test_watcom.c -i="D:\WATCOM/h" -w4 -e25 -zq -od -d2 -fp6 -bt=dos -fo=.&
+obj -ml
+
+D:\ASM\OS_2013_12\document\examples\noname.exe : D:\ASM\OS_2013_12\document\&
+examples\test_watcom.obj .AUTODEPEND
+ @D:
+ cd D:\ASM\OS_2013_12\document\examples
+ @%write noname.lk1 FIL test_watcom.obj
+ @%append noname.lk1 
+ *wlink name noname d all sys dos op m op maxe=25 op q op symf @noname.lk1
+

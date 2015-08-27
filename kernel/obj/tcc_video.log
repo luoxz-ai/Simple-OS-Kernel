@@ -1,0 +1,5 @@
+Turbo C  Version 2.01  Copyright (c) 1987, 1988 Borland International
+video.c:
+Warning video.c 17: Non-portable pointer conversion
+Warning video.c 375: Unreachable code in function GoPreviousPosition
+Error video.c 417: Unable to execute command 'tasm.exe'

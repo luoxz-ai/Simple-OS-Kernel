@@ -1,0 +1,25 @@
+Turbo C  Version 2.01  Copyright (c) 1987, 1988 Borland International
+loader.c:
+Warning loader.c 64: Unreachable code in function SwitchTo4GB
+Warning loader.c 65: Unreachable code in function SwitchTo4GB
+Warning loader.c 66: Unreachable code in function SwitchTo4GB
+Warning loader.c 67: Unreachable code in function SwitchTo4GB
+Warning loader.c 68: Unreachable code in function SwitchTo4GB
+Warning loader.c 69: Unreachable code in function SwitchTo4GB
+Warning loader.c 70: Unreachable code in function SwitchTo4GB
+Warning loader.c 71: Unreachable code in function SwitchTo4GB
+Warning loader.c 72: Unreachable code in function SwitchTo4GB
+Warning loader.c 73: Unreachable code in function SwitchTo4GB
+Warning loader.c 74: Unreachable code in function SwitchTo4GB
+Warning loader.c 75: Unreachable code in function SwitchTo4GB
+Warning loader.c 76: Unreachable code in function SwitchTo4GB
+Warning loader.c 77: Unreachable code in function SwitchTo4GB
+Warning loader.c 78: Unreachable code in function SwitchTo4GB
+Warning loader.c 79: Unreachable code in function SwitchTo4GB
+Warning loader.c 80: Unreachable code in function SwitchTo4GB
+Warning loader.c 81: Unreachable code in function SwitchTo4GB
+Warning loader.c 129: Non-portable pointer assignment in function GetNextCluster
+Warning loader.c 181: Non-portable pointer assignment in function ReadClusters
+Warning loader.c 200: Non-portable pointer assignment in function ReadClusters
+
+        Available memory 398394

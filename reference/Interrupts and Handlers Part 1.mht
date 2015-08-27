@@ -1,0 +1,1973 @@
+Content-Type: multipart/related; start=<op.mhtml.1388465643318.12bc615d452e7374@192.168.0.196>; boundary=----------R0v3rAKLNEisWxsdM4VBv7
+Content-Location: http://www.delorie.com/djgpp/doc/ug/interrupts/inthandlers1.html
+Subject: =?utf-8?Q?Interrupts=20and=20Handlers=20Part=201?=
+MIME-Version: 1.0
+
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=inthandlers1.html
+Content-Type: text/html; name=inthandlers1.html
+Content-ID: <op.mhtml.1388465643318.12bc615d452e7374@192.168.0.196>
+Content-Location: http://www.delorie.com/djgpp/doc/ug/interrupts/inthandlers1.html
+Content-Transfer-Encoding: Quoted-Printable
+
+<html><head><title>Interrupts and Handlers Part 1</title>
+<base href=3D"http://www.delorie.com/djgpp/doc/ug/interrupts/inthandlers=
+1.html">
+</head><body><center><iframe src=3D"http://rcm.amazon.com/e/cm?t=3Ddelor=
+iesoftware&o=3D1&p=3D48&l=3Dur1&category=3Delectronicsrot&f=3Difr" width=
+=3D"728" height=3D"90" scrolling=3D"no" border=3D"0" marginwidth=3D"0" s=
+tyle=3D"border:none;" frameborder=3D"0"></iframe>
+<table width=3D"100%" border=3D0 cellspacing=3D0 cellpadding=3D3><tr><td=
+ align=3Dleft valign=3Dtop bgcolor=3D"#ffcc99"><small><font face=3D"itc =
+avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href=3D"/" target=3D"_top">www.delorie.com</a>/<a href=3D"/djgpp/" ta=
+rget=3D"_top">djgpp</a>/<a href=3D"/djgpp/doc/" target=3D"_top">doc</a>/=
+ug/interrupts/inthandlers1.html</b></font></small></td>
+<td align=3Dright valign=3Dtop bgcolor=3D"#ffcc99"><small><font face=3D"=
+itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href=3D"/search/">search</a> &nbsp;
+</b></font></small></td>
+</tr></table><a href=3D"bulktrap.html"></a><big><big><b>Interrupts and H=
+andlers Part 1</b></big></big></p></center>
+
+
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Any Questions/Comments/Crit=
+icisms/Praises/Threats, please feel free to E-Mail the author of
+this section, <A HREF=3D"mailto:DarkRealms@netcabo.pt">Frederico Jer&oac=
+ute;nimo</A>.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;And, why not visit his site as=
+ well where you can find other tutorials : <A HREF=3D"http://mega.ist.ut=
+l.pt/~fjds/">Dark Realms</A><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This tutorial has been split i=
+n two due to its length. Check <A HREF=3D"inthandlers2.html">Part 2</A> =
+as well.
+</P>
+
+<A NAME=3D"#ABSTRACT">
+<H2>Abstract</H2></A>
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Study! The sound of this wo=
+rd alone is enough to strike fear into the heart of even the most season=
+ed and devoted student. This unavoidable and time consuming demon seems =
+to creep out of nowhere and usually hits us in the most unappropriated o=
+f times. And if you're forced or the study contents are truly unpleasant=
+, it hits you even harder. So, either you flee and abandon yourself into=
+ the bottomless pit of ignorance or allow yourself to be dragged into st=
+udy hell where your task is to get out as quickly and efficiently as pos=
+sible. How to accomplish this? Use a study technique. Of course, everyon=
+e has its own personal favourite study technique. Mine for instance is l=
+eaving everything to the last day and then study to death while cursing =
+my foolishness. Ok, not much of a technique I agree... and unfortunately=
+ not very original either. But back in my old high school days I had a f=
+riend that had a very peculiar and unique way of studying.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;He thought that since we ha=
+d so many different disciplines and each demanded some amount of study, =
+why not study them all at once. When he had to study a given subject, fo=
+r example maths, he proceeded to opening his math book and then reading =
+it for a couple of minutes. So far nothing strange. But, he would then m=
+ark his position with a pencil and jump to another book, for example his=
+tory, which he would read for a few minutes. Then, he returned to the ma=
+rked position in the maths book and read a little more. He moved on to y=
+et another book, let's say biology, before returning to the newly marked=
+ position in the maths book. This <I>ritual</I> continued until he decid=
+ed study was over. He claimed that this method allowed him to distance h=
+imself from the subject at hand (in this case maths) so he could better =
+absorb what he had just read and at the same time learn a little bit of =
+other disciplines in the process, gaining a better understanding of what=
+ he was sure he had to study in the near future (for an exam of a differ=
+ent subject).</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Without trying to figure ou=
+t if this is an efficient technique (although somehow it seemed to work.=
+..), let's just say that it's a good thing that computers work in a simi=
+lar way. You can have a program running that is <I>interrupted</I> somew=
+here along its execution so it can perform for example a system command.=
+ The processor keeps track of where the program stopped, carries out the=
+ system command by jumping to the right address and when this is over ju=
+mps back to the previous location and resumes program execution. If, at =
+a later stage, it needs to be interrupted again the process is repeated.=
+ If an <I>interrupt</I> wasn't issued and instructions were always carri=
+ed out in a linear sequential way this kind of operation would be imposs=
+ible to perform. And the whole idea of a computer system as we conceive =
+it would collapse.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Of course, a program may be=
+ interrupted by a multitude of reasons other than the execution of a sys=
+tem command. For example, interrupts can occur when there is an I/O devi=
+ce request, when a memory protection violation is detected or when there=
+ is an hardware malfunction or a power failure. All these events trigger=
+ the arrest of program execution and transfer of control to another piec=
+e of code, often called an handler or ISR (Interrupt Service Routine).  =
+The handler takes care of everything required by the interrupt and then =
+returns to original program.
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thus, interrupts and handle=
+rs are a vital part of any computer system. Unfortunately, the terminolo=
+gy to describe exceptional situations where the normal execution order o=
+f instruction is changed varies among machines and authors. Terms like i=
+nterrupt, fault, trap and exceptions are used, though not in a consisten=
+t fashion. So, in the first part of this tutorial I'll start by providin=
+g a description of an interrupt and then I'll cover the various types of=
+ interrupts. I'll then move on to handlers and the care you must take wh=
+en designing one. Next, I'll explore the hardware responsible or directl=
+y affected by interrupts. Afterwards, I'll take you on a guided tour thr=
+ough the pitfalls of protected mode interrupt design in the second part =
+of this tutorial, giving full coverage to this delicate subject and offe=
+ring plenty of useful examples. This section is without question the mos=
+t empirical of all. Finally, I'll discuss some miscellaneous related iss=
+ues of interest. This HTML document was split in two due to space constr=
+aints.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The third and final part of=
+ this tutorial is as if not more important. And it comes in a form of a =
+zipped file. This compressed file contains essential coded elements and =
+examples. And not only that, but it works as a full tutorial of its own.=
+ The code is exhaustively commented and accompanies you step by step as =
+you unravel the deepest secrets of interrupt and handler control. So ple=
+ase, download this file so we can get down to serious business...</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I'll be using Djggp (The DO=
+S&#174; version of the GNU gcc compiler) 2.03 and NASM 0.98 in the prote=
+cted-mode section of this document and in the zipped tutorial files. How=
+ever, most of the notions can be applied to other DPMI compilers. You ca=
+n get Djgpp <A HREF=3D"http://www.delorie.com" TARGET=3D_top>here</A> an=
+d
+NASM <A HREF=3D"http://www.web-sites.co.uk/nasm/" TARGET=3D_top>here</A>=
+.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This tutorial would not hav=
+e been possible without the invaluable help of a few people. Please chec=
+k the <A HREF=3D"inthandlers2.html#ACKNOWLEDGE">acknowledgements</A> sec=
+tion for further details.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One final word of warning, =
+this tutorial is quite long. So, grab some hot chocolate and get ready t=
+o jump into the fire of hell study...</P>
+<BR>
+
+<A NAME=3D"#LEGALCRAP">
+<H2>Legal Stuff</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This section is a bore. Unf=
+ortunately, nowadays, it is also a necessity...</P>
+<P><I>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This text is provided "a=
+s is", without warranty of any kind or fitness for a particular purpose,=
+ either expressed or implied, all of are hereby explicitly disclaimed. I=
+n no way can the author of this text be made liable for any damages that=
+ are caused by it. You are using this document at your own risk!</I></P>=
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Now for the good news. Noth=
+ing that comes in this document ever made my computer crash and I person=
+ally
+think that all information within is absolutely harmless. I wrote this t=
+o
+help out fellow programmers and I sincerely hope it is not a pointless
+article. Please send some feedback.</P><BR>
+
+<A NAME=3D"#INTERRUPTS">
+<H2>Interrupts</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An interrupt is a request o=
+f the processor to suspend its current program and transfer control to a=
+ new program called the <I>Interrupt Service Routine</I> (ISR). Special =
+hardware mechanisms that are designed for maximum speed force the transf=
+er. The ISR determines the cause of the interrupt, takes the appropriate=
+ action, and then returns control to the original process that was suspe=
+nded.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Why do you need interrupts?=
+ The structure of the processor of any computer is conceived so it can c=
+arry out instructions endlessly. As soon as an instruction has been exec=
+uted, the next one is loaded and executed. Even if it appears the comput=
+er is inactive, when it is waiting in the DOS prompt or in Windows for y=
+our next action, it does not mean it has stopped working , only to start=
+ again when instructed to. No, not at all. In fact, many routines are al=
+ways running in the background independently of your instructions , such=
+ as checking the keyboard to determine whether a character has been type=
+d in. Thus, a program loop is carried out. To interrupt the processor in=
+ its never-ending execution of these instructions, a so-called <I>interr=
+upt</I> is issued. That is why it is possible for you to reactivate the =
+CPU whenever you press a key (fortunately...). Another example, this tim=
+e an internal one, is the timer interrupt, a periodic interrupt, that is=
+ used to activate the resident program PRINT regularly for a short time.=
+</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For the 80x86 256 different=
+ interrupts (ranging from 0-255) are available in total. Intel has reser=
+ved the first 32 interrupts for exclusive use by the processor but this =
+unfortunately hasn't prevented IBM from placing all hardware interrupts =
+and the interrupts of the PC BIOS in exactly this region which can give =
+rise to some strange situations.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Speaking of hardware interr=
+upts, you can distinguish three types of interrupts:<BR><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Software Interrupts<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Hardware Interrupts<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Exceptions</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I will give a brief descrip=
+tion of the previous categories but a detailed analysis is beyond the sc=
+ope of this document. Please consult a reference manual, like the excell=
+ent "The Indispensable PC Hardware Book" by Hans-Peter Messmer and publi=
+shed by Addisson-Wesley (see the <A HREF=3D"inthandlers2.html#REFERENCES=
+">reference</A> section), or send me an <A HREF=3D"mailto:DarkRealms@net=
+cabo.pt">email</A> if you wish to know further details.</P></B></BR>
+
+<A NAME=3D"#SOFTINTS">
+<H3>1) Software Interrupts</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Software interrupts are ini=
+tiated with an INT instruction and, as the name implies, are triggered v=
+ia software. For example, the instruction INT 33h issues the interrupt w=
+ith the hex number 33h.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In the real mode address sp=
+ace of the i386, 1024 (1k) bytes are reserved for the <I>interrupt vecto=
+r table</I> (IVT). This table contains an interrupt vector for each of t=
+he 256 possible interrupts. Every interrupt vector in real mode consists=
+ of four bytes and gives the jump address of the ISR (also known as <I>i=
+nterrupt handler</I>) for the particular interrupt in segment:offset for=
+mat.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When an interrupt is issued=
+, the processor automatically transfers the current flags, the code segm=
+ent CS and the instruction pointer EIP (or IP in 16-bit mode) onto the s=
+tack. The interrupt number is internally multiplied by four and then pro=
+vides the offset in the segment 00h where the interrupt vector for handl=
+ing the interrupt is located. The processor then loads EIP and CS with t=
+he values in the table. That way, CS:EIP of the interrupt vector gives t=
+he entry point of the interrupt handler. The return to the original prog=
+ram that launched the interrupt occurs with an IRET instruction.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Software interrupts are alw=
+ays synchronized with program execution; this means that every time the =
+program gets to a point where there is an INT instruction, an interrupt =
+is issued. This is very different from hardware interrupts and exception=
+s as you'll soon find out.</P></B><BR>
+
+<A NAME=3D"#HARDINTS">
+<H3>2) Hardware Interrupts</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As the name suggests, these=
+ interrupts are set by hardware components (like for instance the timer =
+component) or by peripheral devices such as a hard disk. There are two b=
+asic types of hardware interrupts: <I>Non Maskable Interrupts</I> (NMI) =
+and (maskable) <I>Interrupt Requests</I> (IRQ).</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An NMI in the PC is, genera=
+lly, not good news as it is often the result of a serious hardware probl=
+em, such as a memory parity error or a erroneous bus arbitration. An NMI=
+ cannot be suppressed (or masked as the name suggests). This is quite ea=
+sy to understand since it normally indicates a serious failure and a com=
+puter with incorrectly functioning hardware must be prevented from destr=
+oying data.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interrupt requests, on the =
+other hand, can be masked with a CLI instruction that ignores all interr=
+upt requests. The opposite STI instruction reactivates these interrupts.=
+ Interrupt requests are generally issued by a peripherical device.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hardware interrupts (NMI or=
+ IRQ) are, contrary to software interrupts, asynchronous to the program =
+execution. This is understandable because, for example, a parity error d=
+oes not always occur at the same program execution point. This makes the=
+ detection of program errors very difficult if they only occur in connec=
+tion with hardware interrupts.</P></B><BR>
+
+<A NAME=3D"#EXCEPTIONS">
+<H3>3) Exceptions</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This particular type of int=
+errupt originates in the processor itself. The production of an exceptio=
+n corresponds to that of a software interrupt. This means that an interr=
+upt whose number is set by the processor itself is issued.  When do exce=
+ptions occur? Generally, when the processor can't handle alone an intern=
+al error caused by system software.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are three main classe=
+s of exceptions which I will discuss briefly.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <B>Fault</B> : A fault is=
+sues an exception prior to completing the instruction. The saved EIP val=
+ue then points to the same instruction that created the exception. Thus,=
+ it is possible to reload the EIP (with IRET for instance) and the proce=
+ssor will be able to re-execute the instruction, hopefully without anoth=
+er exception.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <B>Trap</B> : A trap issues =
+an exception after completing the instruction execution. The saved EIP p=
+oints to the instruction immediately following the one that gave rise to=
+ the exception. The instruction is therefore not re-executed again. Why =
+would you need this? Traps are useful when, despite the fact the instruc=
+tion was processed without errors, program execution should be stopped a=
+s with the case of debugger breakpoints.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <B>Abort</B> : This is not a=
+ good omen. Aborts usually translate very serious failures, such as hard=
+ware failures or invalid system tables. Because of this, it may happen t=
+hat the address of the error cannot be found. Therefore, recovering prog=
+ram execution after an abort is not always possible.</P></B><BR>
+
+<A NAME=3D"#SIGNALS">
+<H2>Signals</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A signal is an notification=
+ to a process that an event has occurred. Signals are sometimes called <=
+I>software interrupts</I>. And this, causes a few problems... Are signal=
+s different from the software interrupts we treated above? Or only a dif=
+ferent name for the same thing? Before answering to those questions, you=
+ should know that the concept of an interrupt (in particular a software =
+interrupt) has expanded in scope over the years. The problem is that thi=
+s expansion has not been an organized one, but rather a 'I'll do as I pl=
+ease' rampage. The 80x86 family has only added to the confusion surround=
+ing interrupts by introducing the INT (software interrupts) instruction =
+discussed above. The result of all this mess? There is no clear consensu=
+s of what terms to use in a given situation and different authors adopte=
+d different terms to their own use. So, words like <I>software interrupt=
+s</I>, <I>signals</I>, <I>exceptions</I>, <I>traps</I>,etc came bouncing=
+ around in completely different contexts.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In order to avoid further c=
+onfusion, this document will attempt to use the most common meaning for =
+these terms. Also, in order to differentiate between signals and softwar=
+e interrupts, we'll consider that :</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <B>Software interrupts</B=
+> - Are explicitly triggered with an INT instruction and are therefore s=
+ynchronous, as discussed previously.<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <B>Signals</B> - Don't make =
+use of the INT instruction and usually occur asynchronously, that is, th=
+e process doesn't know ahead of time exactly when a signal will make its=
+ appearance.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Now that we've cleared the =
+pathway, let's dive into the pool. The concept of signal handling was bo=
+rn (or at least it gained strength) with the Unix platform, a protected =
+mode and multi-threaded system. Therefore, I will start by providing a g=
+eneral overview of signal handling and only afterwards will I explain wh=
+at changes occur in a real-mode system like MS-DOS using a protected mod=
+e compiler like Djgpp. So, get ready for a thrill...</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A signal is said to be gene=
+rated for (or sent to) a process when the event associated with that sig=
+nal first occurs. Signals can be sent by one process to another process =
+( or to itself) or by the OS to a process. And what kind of events can r=
+aise a signal? Here are a few examples :
+<UL>
+<LI>A program error such as dividing by zero or issuing an address outsi=
+de the valid range.
+<LI>A user request to interrupt or terminate the program.
+<LI>The termination of a child process.
+<LI>Expiration of a timer or alarm.
+<LI>A call to kill from another (or the same) process.
+<LI>An attempt to perform an illegal I/O operation like for instance rea=
+ding from a pipe when the link is broken...
+</UL>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As you can easily see, the =
+events that generate signals fall into three major categories : Errors, =
+external events and explicit requests.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An error means that the pro=
+gram performed something invalid. But not all kinds of errors generate s=
+ignals--in fact, most do not. For example, trying to open a nonexistent =
+file is an error but it does not raise a signal. This error is associate=
+d with a specific library call. The errors which raise signals are those=
+ that can happen anywhere in the program, not just in library calls. The=
+se include division by zero and invalid memory addresses.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An external event generally=
+ has to do with I/O or other processes. These include the arrival of inp=
+ut, the expiration of a timer or the termination of a child process.</P>=
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An explicit request means t=
+he use of a library function such as kill whose purpose is specifically =
+to generate a signal.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signals can be generated sy=
+nchronously or asynchronously (the latter being more common). If you try=
+ to reference an unmapped, protected or bad memory address a SIGSEV or S=
+IGBUS can be issued, a floating point exception can generate a SIGFPE, a=
+nd the execution of an illegal instruction can generate SIGILL. All the =
+previous events, called errors if you recall, generate synchronous signa=
+ls. </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Events such as keyboard int=
+errupts generate signals (SIGINT) which are sent to the target process. =
+Such events generate asynchronous signals.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We now know how signals are=
+ generated and how about delivery? Well, when a signal is generated, it =
+becomes pending. Normally, it remains pending for just a short period of=
+ time and then is delivered to the process that was signaled. However, i=
+f that kind of signal is currently blocked, it may remain pending indefi=
+nitely--until signals of that kind are unblocked. Once unblocked, it wil=
+l be delivered immediately. Once a signal has been delivered, the target=
+ program has a choice : Ignore the signal, specify an handler function o=
+r accept the default action for that kind of signal. If the first option=
+ is selected, any signal that is generated is discarded immediately, eve=
+n if blocked at the time. Building handler functions will be examined in=
+ closer detail later on. Finally, if a signal arrives which the program =
+has neither handled nor ignored, its default action takes place. Each ki=
+nd of action has its own default action : It can be to terminate the pro=
+cess (the most common one) or for certain "harmless" events, to do nothi=
+ng.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are few other things =
+concerning signals that might interest you, but for our purpose we're do=
+ne. If you wish to know more, check any Unix reference manual (see the <=
+A HREF=3D"inthandlers2.html#REFERENCES">reference</A> section) or give <=
+A HREF=3D"mailto:DarkRealms@netcabo.pt">me</A> a ring. Also, I decided n=
+ot to give a complete listing of standard signals here as it would fill =
+too much space, but I'll cover quite a few that are accepted by Djgpp, t=
+he DOS version of the GNU gcc compiler, on the next section of this docu=
+ment.</P>
+<BR><BR>
+
+<A NAME=3D"#DOSSIGNALS">
+<H2>Signals and MS-DOS</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As with so many other thing=
+s, signal handling in Djgpp under MS_DOS brings a few additional complic=
+ations. Therefore, as described in the info docs, due to the subtleties =
+of protected-mode behaviour in MS-DOS programs, signal handlers cannot b=
+e safely called from within hardware interrupt handlers. In reality, wha=
+t happens is that signal handler is only called when the program hits pr=
+otected-mode and starts messing with its data. So, if the signal is rais=
+ed while the processor is in real-mode, like when calling DOS services, =
+the signal handler won't be called until the call returns. An example of=
+ this is if you try to press 'CTRL-C' in the middle of a gets() instruct=
+ion, you will need to press 'ENTER' before the signal handler for SIGINT=
+ (CTRL-C) is called. Another consequence of this implementation is that =
+when the program isn't touching any of its data (like in very tight loop=
+s which only use values in the registers), it can't be interrupted.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;But how do you incorporate =
+signal handling in your programs? This is when the signal() function ste=
+ps in. Here's its rather complicated prototype :</P>
+<I>
+<UL>
+#include &lt;signal.h&gt;<BR>
+void (*signal (int sig, void (*func)(int)))(int);<BR>
+</UL>
+</I>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The first argument is the s=
+ignal number that you want to address. Every signal has a mnemonic that =
+you should use for portable programs, but we'll get back to that in a se=
+cond. The second argument is the name of the function that will be regis=
+tered as the signal handler for the signal given by the first argument. =
+After you call signal() and register the function as a signal handler, i=
+t will be called when that signal occurs. The execution of the program w=
+ill then be suspended until the handler returns or calls 'longjmp'.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instead of passing a functi=
+on name as the second argument, you have other options at your disposal.=
+ You may pass SIG_DFL as the value of 'func' to reset the signal handlin=
+g for signal number 'sig' to default., SIG_ERR to force an error when th=
+e signal is raised or SIG_IGN to ignore that signal.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If <I>signal</I> can't hono=
+r the request, that is if its first argument is outside valid limits for=
+ signal numbers, it returns SIG_ERR instead.</P> =
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I promised in the previous =
+section that I would give you a list of supported signals in Djgpp. I al=
+so told you that every signal number has a mnemonic associated with it. =
+So, here are the items you should use as signal numbers and their corres=
+ponding description :</P>
+<UL>
+<LI><B>SIGABRT</B> - Abnormal termination. Only used in Djgpp by the ass=
+ert() function to terminate the program when an assertion fails and by t=
+he abort() function.<BR>
+<LI><B>SIGALRM</B> - Alarm clock expiration. Generated after a certain t=
+ime period has passed after a call to the library function alarm(). Not =
+ANSI.<BR>
+<LI><B>SIGFPE</B> - Floating-Point Exception / Erroneous Arithmetic Oper=
+ation. Generated in case of a divide by zero exception ( int 00h), overf=
+low exception (int 04h), and any x87 co-processor exception, either gene=
+rated by the CPU (int 10h) or by the co-processor itself (int 75h).<BR>
+<LI><B>SIGHUP</B> - Hangup on controlling-terminal. Currently unused. No=
+t ANSI.<BR>
+<LI><B>SIGILL</B> - Illegal hardware instruction. Currently only generat=
+ed for unknown/invalid exceptions.<BR>
+<LI><B>SIGINT</B> - Terminal interrupt signal. One of the most useful si=
+gnals. Generated when an INTR key ('CTRL-C' by default) or a 'CTRL-BREAK=
+' key (int 1Bh) is hit.<BR>
+<LI><B>SIGKILL</B> - Termination signal (cannot be caught, blocked or ig=
+nored). Currently unused. Not ANSI.<BR>
+<LI><B>SIGNOFP</B> - The no co-processor signal. Generated if a co-proce=
+ssor (floating point) instruction is encountered when no co-processor is=
+ installed (int 07h). Not ANSI nor POSIX.<BR>
+<LI><B>SIGPIPE</B> - Write on a pipe that has no reading process (broken=
+ pipe). Currently unused. Not ANSI.<BR>
+<LI><B>SIGPROF</B> - The profiler signal. Used by the execution profile =
+gathering code in a program compiled with the '-pg' option. Not ANSI nor=
+ POSIX.<BR>
+<LI><B>SIGQUIT</B> - Interactive termination. Generated when the QUIT ke=
+y ( 'CTRL-\' by default) is hit. Not ANSI.<BR>
+<LI><B>SIGSEV</B> - The invalid storage access (segmentation violation) =
+signal. Generated in response to any of the following exceptions : bound=
+ range exceeded in BOUND instruction (int 05h), double exception or an e=
+xception in the exception handler (int 08h), segment boundary violation =
+by the co-processor (int 09h), invalid TSS (int 0Ah), segment not presen=
+t (int 0Bh), stack fault (int 0Ch), general protection violation (int 0D=
+h) or page fault (int 0Eh).<BR>
+<LI><B>SIGTERM</B> - Termination request signal. Currently unused.<BR>
+<LI><B>SIGTIMR</B> -  The timer signal. Used by the setitimer() and alar=
+m() functions. Not ANSI nor POSIX.<BR>
+<LI><B>SIGTRAP</B> - Trace/Breakpoint trap. Generated in response to the=
+ debugger exception (int 01h) or breakpoint exception (int 03h). Not ANS=
+I nor POSIX.<BR>
+<LI><B>SIGUSR1</B> - User-defined signal 1. Not ANSI.<BR>
+<LI><B>SIGUSR2</B> - User-defined signal 2. Not ANSI.<BR>
+</UL>
+<BR>
+<BR>
+
+<A NAME=3D"#HANDLERS">
+<H2>Handlers</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An handler, also known as c=
+allback, is in fact the routine that is called by an interrupt, or in ot=
+her words, it's the ISR itself. So, why a different name? Well, the word=
+ handler is normally used for ISRs created by you, the programmer, as op=
+posed to those that are pre-built either in the OS or BIOS.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The next question is why cr=
+eate an handler if the ISRs are already present? The answer is simple : =
+To have more control and flexibility. Without handlers, your programs wo=
+uld have to abide by strict and rigid rules which would limit their usef=
+ulness. Handlers are indispensable in several situations as you will soo=
+n find out. Keep on reading.</P>
+
+<A NAME=3D"#CREATEHANDLER">
+<H2>Creating Handlers</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The creation of interrupt h=
+andlers has traditionally been considered one of the most arcane of prog=
+ramming tasks, suitable only for the elite cadre of system hackers. Howe=
+ver, writing an interrupt handler in itself is quite straightforward. Le=
+t's hope that the following guidelines will help clear the myth...</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A program preparing to hand=
+le interrupts must do the following :<BR>
+<OL>
+<LI>Disable interrupts, if they were previously enabled, to prevent them=
+ from occurring while interrupt vectors are being modified.<BR>
+<LI>Initialize the vector for the interrupt of interest to point to the =
+program's interrupt handler.<BR>
+<LI>Ensure that, if interrupts were previously disabled, all other vecto=
+rs point to some valid handler routine.<BR>
+<LI>Enable interrupts once again.
+</OL></P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The interrupt handler must =
+observe the following sequence of steps :<BR>
+<OL>
+<LI>Save the system context (registers, flags and anything else that the=
+ handler is suitable of modifying and that wasn't saved automatically by=
+ the CPU), normally by pushing the desired elements into the stack or sa=
+ving them into variables.<BR>
+<LI>Block any interrupts that might cause interference if they are allow=
+ed to occur during this handler's processing. Please note that sometimes=
+ you'll have to disable all interrupts.<BR>
+<LI>Enable any interrupts that should still be allowed to occur during t=
+his handler's execution.<BR>
+<LI>Determine the cause of the interrupt.<BR>
+<LI>Take the appropriate action(s) for the interrupt.<BR>
+<LI>Restore the system context, usually by popping the elements from the=
+ stack or by reading the variables.<BR>
+<LI>Reenable all interrupts blocked.<BR>
+<LI>Resume execution of the interrupted process.<BR>
+</OL></P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When writing an interrupt h=
+andler, take it easy and try to cover all the bases. The main reason int=
+errupt handlers have acquired such a mystical reputation is that they ar=
+e so difficult to debug when they contain obscure errors. Because interr=
+upts can occur asynchronously - that is, because they can be caused by e=
+xternal events without regard to the state of the currently executing pr=
+ocess - bugs can be a real problem to detect and correct. This means tha=
+t an error can manifest its presence in the program much later than it a=
+ctually occurs, thus leading to a true quest of the Holy Grail.</P>
+
+<BR>
+<BR>
+
+<A NAME=3D"#DOSHANDLERS">
+<H2>Handlers and MS-DOS</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This section is only to inf=
+orm you of some restrictions and rules that apply to a handler for hardw=
+are interrupts under MS-DOS :
+<UL>
+<LI>Because MS-DOS is not reentrant, a hardware interrupt handler should=
+ never call any MS-DOS functions during the actual interrupt process.<BR=
+>
+<LI>If your program is not the only process in the system that uses this=
+ interrupt level, chain back to the previous handler after performing yo=
+ur own processing on an interrupt.<BR>
+<LI>Remember to fetch and save the initial contents of the interrupt vec=
+tor before modifying it and then restore the original contents when your=
+ program exits.<BR>
+<LI>Try to keep the time that interrupts are disabled and the total leng=
+th of the service routine to an absolute minimum.
+</UL></P>
+<BR>
+<BR>
+
+<A NAME=3D"#HARDWARE">
+<H2>Hardware Zone</H2></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For all of you hardware fre=
+aks out there, we'll start by examining in close detail the chip that al=
+lows the existence of interrupts : The 8259A PIC.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Afterwards, we'll explore e=
+ach of the 8259A PIC input lines, that is, the interrupts that can trigg=
+er a reaction from this device. A brief explanation of each input will b=
+e given, but since this is a tutorial about interrupts (and quite a big =
+one might I add) everything not directly related with interrupts will on=
+ly be approached lightly. However, stay tuned for a hardware section on =
+this site that will not avoid such issues.</P>
+
+<A NAME=3D"#PIC8259A">
+<H3>1) The 8259A PIC</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As explained in the <A HREF=
+=3D"inthandlers2.html#INTPOLL">Interrupt Driven I/O vs. Polling</A> sect=
+ion I/O devices can be serviced in two different ways : The CPU <I>polli=
+ng</I> method and the <I>interrupt</I> based technique. The 8259A <B>P</=
+B>rogrammable <B>I</B>nterrupt <B>C</B>ontroller (PIC) allows for the la=
+ter. It is designed to permit prioritizing and handling of hardware inte=
+rrupt requests from peripheral devices, mainly in a PC environment.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As the processor usually on=
+ly has a single interrupt input but requires data exchange with several =
+interrupt-driven devices, the 8259A PIC is implemented to manage them. T=
+he 8259A PIC acts like a bridge between the processor and the interrupt-=
+requesting components, that is, the interrupt requests are first transfe=
+rred to the 8259A PIC, which in turn drives the interrupt line to the pr=
+ocessor. Thus, the microprocessor is saved the overhead of determining t=
+he source and priority of the interrupting device.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How does it work? The PIC r=
+eceives an interrupt request from an I/O device and informs the micropro=
+cessor. The CPU completes whatever instruction it is currently executing=
+ and then fetches a new routine (ISR) that will service the requesting d=
+evice. Once this peripheral service is completed, the CPU resumes doing =
+exactly what it was doing when the interrupt request occurred (as explai=
+ned throughout this entire document). The PIC functions as an overall ma=
+nager of hardware interrupt requests in an interrupt driven system envir=
+onment.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In case you're wondering ho=
+w is accomplished the interrupt acknowledge sequence, here's a quick ove=
+rview :</P>
+<OL>
+<LI>Eight interrupt lines IR0-IR7 are connected to the <I>interrupt requ=
+est register</I> (IRR). The IRR is eight bits wide, where every bit corr=
+esponds to one of the lines IR0-IR7. The device requiring service signal=
+s the PIC via one of the eight pins IR0-IR7 setting it to a high level. =
+The 8259A then sets the corresponding bit in the IRR.<BR><BR>
+<LI>At the same time, the PIC activates its output INT line to inform th=
+e processor about the interrupt request. The INT line is directly connec=
+ted to the INTR input of the processor. This starts an <I>interrupt ackn=
+owledge sequence</I>.<BR><BR>
+<LI>The CPU receives the INT signal, finishes the currently executing in=
+struction and outputs a first <I>interrupt acknowledge</I> (INTA) pulse =
+if the IE flag is set (that is, if the interrupts are not masked at the =
+CPU).<BR><BR>
+<LI>Upon receival of the first INTA pulse from the CPU the highest prior=
+ity in the IRR register is cleared and the corresponding bit in the <I>i=
+n-service register</I> (ISR) register is set.There is no PIC activity on=
+ the data bus in this cycle.<BR><BR>
+<LI>The processor initiates a second INTA pulse and thus causes the 8259=
+A to put an 8-bit number onto the data bus. The CPU reads this number as=
+ the number of the interrupt handler to call, which is then fetched and =
+executed.<BR><BR>
+<LI>In the <I>Automatic End Of Interrupt</I> (AEOI) Mode the ISR bit is =
+reset at the end of the second INTA pulse. Otherwise, the CPU must issue=
+ an <I>End of Interrupt</I> (EOI) to the 8259A PIC when executing the in=
+terrupt handler to clear the ISR bit manually.<BR><BR>
+</OL>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The EOI command has two for=
+ms, specific and non-specific. The controller responds to a non-specific=
+ EOI command by resetting the highest in-service bit of those set. In a =
+mode that uses a fully-nested interrupt structure, the highest in-servic=
+e bit set is the level that was just acknowledged and serviced. This is =
+the default mode for PCs. In a mode that can use other than the fully-ne=
+sted interrupt structure, a Specific EOI command is required to define w=
+hich in-service bit to reset.</P>
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is this all there is to it?=
+ Usually, yes. But things can get a little trickier depending on the env=
+ironment. For example, as the name indicates the 8259A programmable inte=
+rrupt controller can be programmed under several different modes and for=
+ a defined operation it needs to be initialized first. For instance,
+it can be programmed to mask certain interrupt request lines. In order t=
+o do that the <I>interrupt mask register</I> is implemented. A set bit i=
+n this register masks all the interrupt requests of the corresponding pe=
+ripheral, that is, all requests on the line allocated the set bit are ig=
+nored; all others are not affected by the masking.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;And what happens if an inte=
+rrupt comes when another is being processed, and the EOI for it wasn't i=
+ssued yet? This really depends on interrupt priorities. If a certain int=
+errupt request is in-service (that is, the corresponding bit in the ISR =
+is set), all interrupts of a lower priority are disabled because the in-=
+service request is serviced first. Only an interrupt of a higher priorit=
+y pushes its way to the front immediately after the INTA sequence of the=
+ serviced interrupt. In this case the current INTA sequence is completed=
+ and the new interrupt request is already serviced before the old reques=
+t has been completed by an EOI. Thus, interrupt requests of a lower prio=
+rity are serviced once the processor has informed the PIC by an EOI that=
+ the request has been serviced. Please note that, under certain circumst=
+ances, it is favourable also to enable requests of a lower priority usin=
+g the PIC programming abilities to set the <I>special mask mode</I> (if =
+you're curious check the <A HREF=3D"inthandlers2.html#REFERENCES">refere=
+nce</A> section for further reading). The next table shows the priority =
+among simultaneous interrupts and exceptions :</P>
+<BR>
+<CENTER>
+<TABLE BORDER=3D"1" CELLPADDING=3D"0" CELLSPACING=3D"0" WIDTH=3D"60%">
+<TR BGCOLOR=3D"#3677fc" ALIGN=3D"center">
+<TD WIDTH=3D"80%">
+<B><FONT COLOR=3D"#0a1d68">Class of interrupts and exceptions</FONT></B>=
+
+</TD>
+<TD WIDTH=3D"70%">
+<B><FONT COLOR=3D"#0a1d68">Priority</FONT></B>
+</TD>
+</TR>
+<TR>
+<TD>
+Faults except debug faults
+</TD>
+<TD>
+Highest
+</TD>
+</TR>
+<TD>
+Trap instructions INTO, INT n, INT 3
+</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD>
+Debug traps for this instruction
+</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD>
+Debug faults for next instruction
+</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD>
+NMI interrupt
+</TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR>
+<TD>
+INTR interrupt
+</TD>
+<TD>Lowest</TD>
+</TR>
+</TABLE>
+<BR>
+Table 1 : Priority Among Simultaneous Interrupts and Exceptions
+</CENTER>
+ =
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Another characteristic of t=
+he 8259A PIC is its <I>cascading</I> capability, that is, the possibilit=
+y to interconnect one master and up to eight slave PIC's in an applicati=
+on. But these subjects could build a tutorial of their own, so I'll forw=
+ard you to any serious hardware book if you need more details (alternate=
+ly, you can always <A HREF=3D"mailto:DarkRealms@netcabo.pt">mail</A> me)=
+.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For our purposes we only ne=
+ed to know that a typical PC uses two PICs to provide 15 interrupt input=
+s (7 on the master PIC and 8 on the slave one). The sections following t=
+his one will describe the devices connected to each of those inputs. In =
+the meantime, the following table lists the interrupt sources on the PC =
+(sorted in descending order of priority) :</P>
+<BR>
+<CENTER>
+<TABLE BORDER=3D"1" CELLPADDING=3D"0" CELLSPACING=3D"0" WIDTH=3D"95%">
+<TR BGCOLOR=3D"#3677fc" ALIGN=3D"center">
+<TD WIDTH=3D"21%">
+<B><FONT COLOR=3D"#0a1d68">Input on<BR>8259A</FONT></B>
+</TD>
+<TD WIDTH=3D"12%">
+<B><FONT COLOR=3D"#0a1d68">Priority</FONT></B>
+</TD>
+<TD WIDTH=3D"11%">
+<B><FONT COLOR=3D"#0a1d68">80x86<BR>INT</FONT></B>
+</TD>
+<TD WIDTH=3D"56%">
+<B><FONT COLOR=3D"#0a1d68">Device</FONT></B>
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 0
+</TD>
+<TD>Highest</TD>
+<TD>
+08h
+</TD>
+<TD>
+Timer Chip
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 1
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+09h
+</TD>
+<TD>
+Keyboard
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 2
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+0Ah
+</TD>
+<TD>
+Cascade for controller 2 (IRQ 8-15)
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 9/1
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+71h
+</TD>
+<TD>
+CGA vertical retrace (and other IRQ 2 devices)
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 8/0
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+70h
+</TD>
+<TD>
+Real-time clock
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 10/2
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+72h
+</TD>
+<TD>
+Reserved
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 11/3
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+73h
+</TD>
+<TD>
+Reserved
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 12/4
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+74h
+</TD>
+<TD>
+Reserved in AT, auxiliary device on PS/2 systems
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 13/5
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+75h
+</TD>
+<TD>
+FPU interrupt
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 14/6
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+76h
+</TD>
+<TD>
+Hard disk controller
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 15/7
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+77h
+</TD>
+<TD>
+Reserved
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 3
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+0Bh
+</TD>
+<TD>
+Serial Port 2
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 4
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+0Ch
+</TD>
+<TD>
+Serial Port 1
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 5
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+0Dh
+</TD>
+<TD>
+Parallel port 2 in AT, reserved in PS/2 systems
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 6
+</TD>
+<TD>&nbsp;</TD>
+<TD>
+0Eh
+</TD>
+<TD>
+Diskette drive
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+IRQ 7
+</TD>
+<TD>Lowest</TD>
+<TD>
+0Fh
+</TD>
+<TD>
+Parallel Port 1
+</TD>
+</TR>
+</TABLE>
+<BR>
+Table 2 : 8259A Programmable Interrupt Controller Inputs
+</CENTER>
+<BR><BR>
+
+<A NAME=3D"#TIMER">
+<H3>2) The timer interrupt (int 08h)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I'll assume you've all play=
+ed old games, back in the days where gameplay and plot were far more imp=
+ortant that fancy graphics and nice box-sets... (although these concepts=
+ are all important and shouldn't be mutually exclusive one can't help bu=
+t notice that priorities shifted to uncanny and greedy grounds). Game pr=
+ogrammers of the period, often one-man teams with lots of imagination, w=
+ere sometimes confronted with the problem of implementing certain delays=
+ in the game (damn, that enemy plane is closing in too fast... evasive m=
+aneuvers... I'll ne...arghhhhhhh). Often, <I>dummy</I> loops of the foll=
+owing form were employed :</P>
+<I><UL>for(i=3D0;i<10000;i++);</UL></I>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This seemed to work. Howeve=
+r, this kind of work-around has a significant disadvantage : It relies o=
+n processor speed. What a surprise to find out that the powerful hero <I=
+>Kill Them All</I> of our favourite platform game, so deft and gracious =
+on our 20MHZ i386, now, with a 600MHZ Pentium III running a GeForce beas=
+t,  helplessly dashes against every kind of inoffensive and pitiful obst=
+acle before you even can operate a single key!</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Summarizing, we need a way =
+to generate exactly defined time intervals. And what better way than by =
+hardware? Thus, the PC's designers have implemented one (PC/XT and most =
+ATs) or sometimes two (some new ATs or EISA) <I>Programmable Interval Ti=
+mers</I> (PITs).</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The PIT 8253/8254 generates=
+ programmable time intervals from an external clock signal of a crystal =
+oscillator that are defined independently from the CPU. It's very flexib=
+le and has six modes of operation in all (these modes will not be explai=
+ned in this tutorial, maybe in a future less generic one).</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The 8253/8254 chip comprise=
+s three independently and separately programmable counters 0-2, each of =
+which is 16 bits wide. Each counter, or channel, is supplied with its ow=
+n clock signal (CLK0-CLK2) which serves as the time base for each counte=
+r. Each channel is responsible for a different task on the PC :</P>
+<UL>
+<LI><B>Channel 0</B> : This channel is responsible for updating the syst=
+em clock, generating interrupts every 55ms (approximately). This is abou=
+t once every 1/18.2 seconds. Sometimes this is called the "eighteenth se=
+cond clock" but we will refer to it as the timer interrupt. We'll discus=
+s this channel in more detail in a little while.<BR><BR>
+<LI><B>Channel 1</B> : This channel controls DMA memory refreshing, inst=
+ructing all 18 CLK cycles on a DMA chip to carry out a dummy read cycle.=
+ In the course of this dummy cycle, data is read from memory onto the da=
+ta bus and the address buffers, and address decoders and sense amplifier=
+s in the memory chips are activated to refresh one memory cell row. But =
+the data is not read by any peripheral. Instead, it's discarded in the n=
+ext bus cycle. This is done because DRAM's memory cells must be periodic=
+ally refreshed or they quickly lose their charge. One interesting thing =
+that should be noted is that most system designers lay out the memory re=
+fresh rather carefully, that is, the memory is refreshed more often that=
+ is really necessary. This so-called <I>refresh overhead</I> can reach 1=
+0% or more. Reprogramming channel 1 to refresh memory at a slower rate c=
+an sometimes speed up system performance, but don't overdue it or data l=
+osses might incur (giving rise to parity errors upon reading main memory=
+).<BR><BR>
+<LI><B>Channel 2</B> : This channel is dedicated to the tone frequency g=
+eneration for the installed speaker. It's normally programmed to generat=
+e
+a square wave so a continuous tone is heard. Reprogramming it for "Inter=
+rupt
+on Terminal Count" mode is a nifty trick which can be used to play 8-bit=
+
+samples from the PC speaker. You may generate various frequencies with i=
+t. The audible range of tones lies between about 16Hz and 16kHz. Frequen=
+cies above and below this range are called infra- or supersonic: Your Pc=
+'s amplifier is probably unable to generate such tones.
+</UL>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The timer interrupt vector =
+(channel 0) is probably the most commonly patched interrupt in the syste=
+m. However, it turns out there are <I>two</I> of these vectors in the sy=
+stem. The first one, int 08h, is the hardware vector associated with the=
+ timer interrupt. Unless you're willing to taunt fate, it's not a good i=
+dea to patch this interrupt. If you want to build a timer handler, go fo=
+r the second interrupt, interrupt 1ch. The BIOS' timer ISR (int 08h) alw=
+ays executes an <I>int 1ch</I> instruction before it returns. Catching i=
+t, assuming control and chain back to the old ISR is the best way to des=
+ign your timer handler. Unless you're willing to duplicate the BIOS and =
+DOS timer code, you should never completely replace the existing timer I=
+SR with one of your own. Twiddling with int 1ch can be very dangerous an=
+d misuse can cause your system to crash or otherwise malfunction.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finally, without entering i=
+nto too much detail, I'll leave you with the port addresses of the vario=
+us 8253/8254 PIT registers (the control register loads the counters and =
+controls the various operation modes) :</P><BR>
+<CENTER>
+<TABLE BORDER=3D"1" CELLPADDING=3D"0" CELLSPACING=3D"0" WIDTH=3D"75%">
+<TR BGCOLOR=3D"#3677fc" ALIGN=3D"center">
+<TD WIDTH=3D"20%">
+<B><FONT COLOR=3D"#0a1d68">Port<BR>(1st PIT)</FONT></B>
+</TD>
+<TD WIDTH=3D"20%">
+<B><FONT COLOR=3D"#0a1d68">Port<BR>(2nd PIT)</FONT></B>
+</TD>
+<TD WIDTH=3D"30%">
+<B><FONT COLOR=3D"#0a1d68">Register</FONT></B>
+</TD>
+<TD WIDTH=3D"30%">
+<B><FONT COLOR=3D"#0a1d68">Access Type</FONT></B>
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+040h
+</TD>
+<TD>
+048h
+</TD>
+<TD>
+Counter 0
+</TD>
+<TD>
+Read/Write
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+041h
+</TD>
+<TD>
+049h
+</TD>
+<TD>
+Counter 1
+</TD>
+<TD>
+Read/Write
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+042h
+</TD>
+<TD>
+04ah
+</TD>
+<TD>
+Counter 2
+</TD>
+<TD>
+Read/Write
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+043h
+</TD>
+<TD>
+04bh
+</TD>
+<TD>
+Control Register
+</TD>
+<TD>
+Write-only
+</TD>
+</TR>
+</TABLE>
+<BR>
+Table 3 : 8253/8254 register ports in a PC
+</CENTER>
+<BR><BR>
+
+<A NAME=3D"#KEYBOARD">
+<H3>3) The Keyboard Interrupt (int 09h)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The keyboard is the most co=
+mmon and most important input device for PCs (excluding the mouse). Desp=
+ite the birth and rise of many new "hi-tech" input devices such as scann=
+ers and voice input systems, the keyboard still plays the major role if =
+commands are to be issued or data input to a computer.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contrary to popular belief,=
+ <I>every</I> keyboard has a keyboard chip, even the old "dumb" PC/XT ke=
+yboard with the 8048. This chip supervises the detection of key presses =
+or releases. When you press a key, the keyboard generates a so-called <I=
+>make-code</I> interrupt. If, on the other hand, you release a pressed k=
+ey then the keyboard generates a so-called <I>break-code</I> interrupt. =
+This occurs on IRQ 1 of master 8259A PIC. The BIOS responds to these int=
+errupts by reading the key's <I>scan code</I> (1 byte code that identifi=
+es each keyboard key), converting this to an ASCII character , and stori=
+ng the scan and ASCII codes away in the system <I>type ahead buffer</I>.=
+</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The keyboard really deserve=
+s a tutorial of its own and I won't let it down... So, please be patient=
+ or send me an <A HREF=3D"mailto:DarkRealms@netcabo.pt">email</A>.</P>
+<BR><BR>
+
+<A NAME=3D"#SERIALPORT">
+<H3>4) The Serial Port Interrupts (int 0Bh and 0Ch)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The serial interface is ess=
+ential in a PC because of its flexibility. Various devices such as a plo=
+tter, modem, mouse and, of course, a printer can be connected to a seria=
+l interface. This document will not cover the structure, functioning and=
+ programming of the serial interface, but will take a quick look instead=
+ at its interrupt driven serial communication capabilities.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The PC uses two interrupts,=
+ IRQ 3 and IRQ 4, to support interrupt driven serial communications, as =
+seen in the following table :</P><BR>
+<CENTER>
+<TABLE BORDER=3D"1" CELLPADDING=3D"0" CELLSPACING=3D"0" WIDTH=3D"75%">
+<TR BGCOLOR=3D"#3677fc" ALIGN=3D"center">
+<TD WIDTH=3D"30%">
+<B><FONT COLOR=3D"#0a1d68">Interface</FONT></B>
+</TD>
+<TD WIDTH=3D"40%">
+<B><FONT COLOR=3D"#0a1d68">Base Address</FONT></B>
+</TD>
+<TD WIDTH=3D"30%">
+<B><FONT COLOR=3D"#0a1d68">IRQ</FONT></B>
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+COM 1
+</TD>
+<TD>
+3F8h
+</TD>
+<TD>
+IRQ 4
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+COM 2
+</TD>
+<TD>
+2F8h
+</TD>
+<TD>
+IRQ 3
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+COM 3
+</TD>
+<TD>
+3E8h
+</TD>
+<TD>
+IRQ 4
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+COM 4
+</TD>
+<TD>
+2E8h
+</TD>
+<TD>
+IRQ 3
+</TD>
+</TR>
+</TABLE>
+<BR>
+Table 4 : COMx base addresses and IRQ channels
+</CENTER><BR><BR>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Just like the LPT ports, th=
+e base addresses for the COM ports can be read from the BIOS Data Area.<=
+/P><BR>
+<CENTER>
+<TABLE BORDER=3D"1" CELLPADDING=3D"0" CELLSPACING=3D"0" WIDTH=3D"75%">
+<TR BGCOLOR=3D"#3677fc" ALIGN=3D"center">
+<TD WIDTH=3D"40%">
+<B><FONT COLOR=3D"#0a1d68">Start Address</FONT></B>
+</TD>
+<TD WIDTH=3D"60%">
+<B><FONT COLOR=3D"#0a1d68">Function</FONT></B>
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:0400
+</TD>
+<TD>
+COM1's Base Address
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:0402
+</TD>
+<TD>
+COM2's Base Address
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:0404
+</TD>
+<TD>
+COM3's Base Address
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:0406
+</TD>
+<TD>
+COM4's Base Address
+</TD>
+</TR>
+</TABLE>
+<BR>
+Table 5 : COMx Port Addresses in the BIOS Data Area
+</CENTER><BR><BR>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <I>Universal Asynchrono=
+us Receiver/Transmitter</I> (UART) 8250 (or compatible) generates an int=
+errupt in one of four situations : a character arriving over the serial =
+line, the UART finished the transmission of a character and is requestin=
+g another, an error occurs or a status change is requested. The UART act=
+ivates the same interrupt line (IRQ 3 or IRQ 4) for all four interrupt s=
+ources. This means that the ISR needs to determine the exact nature of t=
+he interrupt interrogating the UART.</P>
+<BR><BR>
+
+<A NAME=3D"#PARALLEL PORT">
+<H3> 5) The Parallel Port Interrupts (int 0Dh and 0Fh)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Every PC is equipped with a=
+t least one parallel and one serial interface. Unlike the serial interfa=
+ce, for which a lot of applications exist, the parallel interface ekes o=
+ut its existence as a wallflower, as it's only used to serve a parallel =
+printer. In a similar way to what was done in the <A HREF=3D"inthandlers=
+1.html#SERIALPORT">serial port</A> section, we'll only concern ourselves=
+ with the basics of interrupt driven parallel communications.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIOS and DOS can usually se=
+rve up to four parallel interfaces in a PC, denoted LPT1, LPT2, LPT3 and=
+ LPT4 (for <I>line printer</I>). The abbreviation PRN (for printer) is a=
+ synonym (an alias) for LPT1. When BIOS assigns addresses to your printe=
+r devices, it stores the address at specific locations in memory, so we =
+can find them as listed in the following table :</P><BR>
+<CENTER>
+<TABLE BORDER=3D"1" CELLPADDING=3D"0" CELLSPACING=3D"0" WIDTH=3D"75%">
+<TR BGCOLOR=3D"#3677fc" ALIGN=3D"center">
+<TD WIDTH=3D"40%">
+<B><FONT COLOR=3D"#0a1d68">Start Address</FONT></B>
+</TD>
+<TD WIDTH=3D"60%">
+<B><FONT COLOR=3D"#0a1d68">Function</FONT></B>
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:0408
+</TD>
+<TD>
+LPT1's Base Address
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:040A
+</TD>
+<TD>
+LPT2's Base Address
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:040C
+</TD>
+<TD>
+LPT3's Base Address
+</TD>
+</TR>
+<TR ALIGN=3D"center">
+<TD>
+0000:040E
+</TD>
+<TD>
+LPT4's Base Address
+</TD>
+</TR>
+</TABLE>
+<BR>
+Table 6 : LPT Addresses in the BIOS Data Area
+</CENTER><BR><BR>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Now that we've come to para=
+llel ports interrupts we face a little enigma. Why did IBM design the or=
+iginal system to allow
+two parallel port interrupts and then promptly designed a printer interf=
+ace card that
+didn=92t support the use of interrupts? As a result, almost no DOS based=
+ software today uses
+the parallel port interrupts (IRQ 5 and IRQ 7). Actually, DOS based soft=
+ware is almost harder to find than diamonds nowadays but we'll not go th=
+at way...</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Great, now that we have so=
+me useless interrupts hanging around..." Wait! These interrupts were not=
+ dumped into the scrap hill! In fact, many devices make use of them. Exa=
+mples include SCSI and sound cards. Because of this, many devices today =
+include <I>interrupt jumpers</I> that let you select IRQ 5 or IRQ 7 on i=
+nstallation.</P>
+<BR><BR>
+
+<A NAME=3D"#DISK">
+<H3>6) The Diskette and Hard Drive Interrupts (int 0Eh and 76h)</H3></A>=
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I will not explain what flo=
+ppy and hard disk drives are or how they work or what their structure is=
+. Although these are all interesting topics to cover in this text, this =
+article is already long enough. I will explore their relationship with i=
+nterrupts however. But before I do that I need to ask you a little quest=
+ion : Do you think that your hard disk is the most important and valuabl=
+e part of your PC? You do? Why? What? You haven't made a single data bac=
+kup and all the past three years's work is on the hard disk? I'll just l=
+eave you with a serious piece of advice : <I>Always have a backup handy!=
+</I> You never know...</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The floppy and hard disk dr=
+ives generate interrupts at the completion of a disk operation. This is =
+a very useful feature for multitasking systems like OS/2, Linux, or Wind=
+ows. While the disk is reading or writing data, the CPU can go execute i=
+nstructions for another process. When the disk finishes the read or writ=
+e operation, it interrupts the CPU so it can resume the original task.</=
+P>
+<BR><BR>
+
+<A NAME=3D"#CLOCK">
+<H3>7) The Real-Time Clock Interrupt (int 70h)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Before IBM made the <I>Real=
+ Time Clock</I> (RTC) chip standard equipment on its PC AT in 1984, user=
+s were prompted to enter the date manually every time they turned on the=
+ir computers. Why? Because at every boot process the PC initialized itse=
+lf to 01.01.1980, 0:00 o'clock. The user had to input the current date a=
+nd time via the DOS commands DATE and TIME. DOS managed all times relati=
+ve to this time and date.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Not very practical, was it?=
+ So the RTC was born. The RTC chip is powered by an accumulator or an in=
+-built battery to ensure it can keep time even when the PC is turned off=
+. The RTC is independent of the CPU and all other chips (including the 8=
+253/8254 that deals with internal system clock)and keeps on updating tim=
+e, day, month, and 2-digit year. It typically contains seven registers t=
+hat store time and date values. Six of the registers are updated automat=
+ically. Each one of them stores a different value: seconds, minutes, hou=
+rs, days, months, and years. The year register stores the last two digit=
+s =96 "99" in 1999 or "00" in 2000. A seventh one, the century register,=
+ stores the first two digits of the 4-digit year. The century register r=
+eads either "19" in 1999 or "20" in 2000 and is not updated automaticall=
+y. It will change only if updated by either the BIOS or the operating sy=
+stem.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The real-time clock interru=
+pt (int 70h) is called 1024 times per second for periodic and alarm func=
+tions. By default, it is disabled. You should only enable this interrupt=
+ if you have an int 70h ISR installed.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One last thing. If you noti=
+ce that the system clock is not accurate losing a number of minutes each=
+ day, or not incrementing the time when the system is turned off, then t=
+he problem might be the RTC battery. The power consumption by the CMOS R=
+AM and the RTC is so low that usually it plays no role in the lifetime o=
+f the batteries or accumulators. Instead, the life expectancy is determi=
+ned by the self-discharge time of the accumulator or battery, and is abo=
+ut 3 years (or 10 years for lithium batteries). Also, the quality of com=
+ponents these days is rather questionable sometimes. So, if you have a P=
+C, old or not, that keeps losing track of time, take it for a visit at t=
+he local computer store.</P>
+<BR><BR>
+
+<A NAME=3D"#FPU">
+<H3>8) The FPU Interrupt (int 75h)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Floating-Point Unit (FP=
+U), also known as a maths co-processor, provides high-performance floati=
+ng-point processing capabilities. Floating point operations such as deci=
+mals and logarithms can take many instruction steps on the main processo=
+r. Such calculations can be handled more efficiently if passed on to a c=
+o-processor. The FPU executes instructions from the processor's normal i=
+nstruction stream and greatly improves its efficiency in handling the ty=
+pes of high-precision floating-point processing operations commonly foun=
+d in scientific, engineering, and business applications.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Before the advent of the 80=
+486, the FPU was an optional chip with a reserved slot on the motherboar=
+d, close to the CPU. Nowadays, all PCs come with in-built FPU.</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The 80x87 FPU generates an =
+interrupt whenever a floating point exception occurs. On CPUs with built=
+-in FPUs (80486DX and better) there is a bit in one of the control regis=
+ter you can set to simulate a vectored interrupt. BIOS generally initial=
+izes such bits for compatibility with existing systems.</P>
+<BR><BR>
+
+<A NAME=3D"#NMI">
+<H3>9) Nonmaskable Interrupts (int 02h)</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Non-maskable interrupts<=
+/I> (NMI) are critical interrupts such as those generated after a power =
+failure (memory parity error) that cannot be blocked by the CPU. This is=
+ in contrast to most common device interrupts such as disk and network a=
+dapter interrupts, which are considered maskable (you can enable or disa=
+ble them with <I>sti</I> and <I>cli</I> instructions).</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This interrupt (int 02h) is=
+ always enabled by default  since it cannot be masked.</P>
+<BR><BR>
+
+<A NAME=3D"#RESERVED">
+<H3>10) Reserved Interrupts</H3></A>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As mentioned in the section=
+ on the <A HREF=3D"#PIC8259A">8259A PIC</A>, there are several interrupt=
+s reserved by IBM. Many systems use the reserved interrupts for the mous=
+e or for other purposes. Since such interrupts are inherently system dep=
+endent, we will not describe them here.</P>
+<BR><BR>
+<CENTER>[ <FONT SIZE=3D"4"><A HREF=3D"inthandlers2.html">Go to Part 2</A=
+></FONT> ]<BR><BR><BR>
+By <A HREF=3D"mailto:DarkRealms@netcabo.pt">Frederico Jer&oacute;nimo</A=
+>, Copyright 1999-2000
+<BR><BR>
+<FONT SIZE=3D"4">Click <A HREF=3D"tuthistory.html#INTHANDLERS">here</A> =
+to view this tutorial's revision history</FONT>
+</CENTER>
+</BODY>
+</HTML>
+
+
+
+
+
+<br clear=3Dall></p>
+<a href=3D"bulktrap.html"></a><table width=3D"100%" border=3D0 cellspaci=
+ng=3D0 cellpadding=3D3><tr>
+<td align=3Dleft valign=3Dtop bgcolor=3D"#ffcc99"><small><font face=3D"i=
+tc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href=3D"/users/dj/" target=3D"_top">webmaster</a> &nbsp;
+<a href=3D"/donations.html" target=3D"_top">donations</a> &nbsp;
+<a href=3D"/store/books/" target=3D"_top">bookstore</a> &nbsp;
+</b></font></small></td>
+<td align=3Dright valign=3Dtop bgcolor=3D"#ffcc99"><small><font face=3D"=
+itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href=3D"/" target=3D"_top">delorie software</a> &nbsp;
+<a href=3D"/privacy.html" target=3D"_top">privacy</a> &nbsp;
+</b></font></small></td>
+</tr><tr><td align=3Dleft valign=3Dtop bgcolor=3D"#ffcc99"><small><font =
+face=3D"itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href=3D"/copyright.html" target=3D"_top">Copyright =A9 2000</a> &nbsp=
+;
+<a href=3D"/users/dj/" target=3D"_top">by DJ Delorie</a> &nbsp;
+</b></font></small></td>
+<td align=3Dright valign=3Dtop bgcolor=3D"#ffcc99"><small><font face=3D"=
+itc avant garde gothic,helvetica,arial"><b> &nbsp;
+Updated Dec 2000 &nbsp;
+</b></font></small></td>
+</tr></table>
+<center><iframe src=3D"http://rcm.amazon.com/e/cm?t=3Ddeloriesoftware&o=3D=
+1&p=3D13&l=3Dez&f=3Difr&f=3Difr" width=3D"468" height=3D"60" scrolling=3D=
+"no" marginwidth=3D"0" marginheight=3D"0" border=3D"0" frameborder=3D"0"=
+ style=3D"border:none;"></iframe>
+</center>
+</body></html>
+
+
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=cm.htm
+Content-Type: text/html; name=cm.htm
+Content-Location: http://rcm.amazon.com/e/cm?t=deloriesoftware&o=1&p=48&l=ur1&category=electronicsrot&f=ifr
+Content-Transfer-Encoding: 8bit
+
+<html> <head> <style type="text/css"> body {   margin:0px;   padding:0px;      } div#wrap {   width:728px;   height:90px;   margin:0px;   padding:0px;   overflow:hidden;   background-color:#FFFFFF; } </style> </head> <body> <div id="wrap"> <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"    codebase="https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"    width="728" height="90" align="middle"> <!-- Tags used by MSIE Rendering engine --> <param name="movie" value="http://ecx.images-amazon.com/images/G/01/associates/2011/banners/amzn_assoc_dslr_728x90.swf?passURL=http://www.amazon.com/b?node=502394%26tag=deloriesoftware%26creative=398421%26camp=213765%26link_code=ur1%26adid=159JBZTC5YXYEV5N337H&amp;passTarget=_top&amp;privacyTarget=_top&amp;privacyURL=http://www.amazon.com/gp/dra/info" /> <param name="quality" value="high" /> <param name="wmode" value="transparent" /> <param name="bgcolor" value="#FFFFFF" /> <param name="allowNetworking" value="all" /> <param name="allowScriptAccess" value="always" /> <!-- Tags used by Mozilla Rendering engine--> <embed src="http://ecx.images-amazon.com/images/G/01/associates/2011/banners/amzn_assoc_dslr_728x90.swf?passURL=http://www.amazon.com/b?node=502394%26tag=deloriesoftware%26creative=398421%26camp=213765%26link_code=ur1%26adid=159JBZTC5YXYEV5N337H&amp;passTarget=_top&amp;privacyTarget=_top&amp;privacyURL=http://www.amazon.com/gp/dra/info"    quality="high"    wmode="transparent"    bgcolor="#FFFFFF"    width="728"    height="90"    allowNetworking="all"   allowScriptAccess="always"   type="application/x-shockwave-flash"    pluginspage="https://www.macromedia.com/go/getflashplayer"> </embed> </object> </div>     <script> function encodeStr(b) { return b && encodeURIComponent(b).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); } function replaceTagUrls(allLinks) { var refRefurl = new RegExp("^http://.*(amazon|endless|myhabit|amazonwireless|javari|smallparts)\.(com|ca|co\.jp|de|fr|co\.uk|cn|it|es)/.*tag=.*linkcode=", "i");      var pageUrl = (window.location != window.parent.location) ? document.referrer: document.location; for (var i=0; i < allLinks.length; i++) { var href = new String(allLinks[i].href); var results; var tag_match; var newUrl; if (results = href.match(refRefurl)) { newUrl = href + "&ref-refURL=" + encodeStr(pageUrl); href = newUrl; allLinks[i].href = href; } } } function replaceAllURLs() { var allAHrefLinks = document.getElementsByTagName('a'); var allAreaHrefLinks = document.getElementsByTagName('area'); replaceTagUrls(allAHrefLinks); replaceTagUrls(allAreaHrefLinks); } replaceAllURLs(); </script></body> </html> <!-- autogen flash template V 0.1311154052 --> 
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=amzn_assoc_dslr_728x90.swf
+Content-Type: application/x-shockwave-flash; name=amzn_assoc_dslr_728x90.swf
+Content-Location: http://ecx.images-amazon.com/images/G/01/associates/2011/banners/amzn_assoc_dslr_728x90.swf?passURL=http://www.amazon.com/b?node=502394%26tag=deloriesoftware%26creative=398421%26camp=213765%26link_code=ur1%26adid=159JBZTC5YXYEV5N337H&passTarget=_top&privacyTarget=_top&privacyURL=http://www.amazon.com/gp/dra/info
+Content-Transfer-Encoding: Base64
+
+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
+
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=cm.htm
+Content-Type: text/html; charset=iso-8859-1; name=cm.htm
+Content-Location: http://rcm.amazon.com/e/cm?t=deloriesoftware&o=1&p=13&l=ez&f=ifr&f=ifr
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> <style type="text/css"> body {   margin:0px;   padding:0px; } div#amazoncontent { font-family:'Arial', sans-serif; font-size:10px; padding:0px; margin:0px; color:#000000; position:relative; width:466px; height:58px; border:1px solid #000000; background-color:#ffffff; overflow:hidden; text-align:left; } div#amazoncontent * { margin:0px; padding:0px; } div#amazoncontent a { color:#3399ff; text-decoration:none; } div#amazoncontent div#logo { position:absolute; left:0px; text-align:center; background-color:#000000; padding:1px;  z-index:0; } div#amazoncontent div#logo img { border:none; } div#amazoncontent div#logo a { color:#cc6600; text-decoration:none; } div#amazoncontent table { border-collapse:collapse; width:388px; margin-left:80px; } div#amazoncontent td { width:50%; vertical-align:top; height:58px; padding-left:20px; }  div#amazoncontent div.product { position:relative; margin:2px 1px 1px; padding:1px 0px; } div#amazoncontent p.details { position:relative; margin:0px; margin-left:55px; padding:0px; } div#amazoncontent img.productImage  { position:absolute; visibility:hidden; top:0px; left:-64px; border:none; } div#amazoncontent span.title { text-decoration:underline; } div#amazoncontent span.author, div#amazoncontent span.price, div#amazoncontent span.loyalty, div#amazoncontent span.info { display:block; margin:0px; padding:0px; color:#000000; } div#amazoncontent span.author { margin:2px 0px 1px; } div#amazoncontent span.price, div#amazoncontent span.loyalty { color:#990000; }  div#amazoncontent div#privacy { position:absolute; bottom:0px; left:0px;  color:#a1a1a1;  z-index:1; } div#amazoncontent div#privacy a {  display:block; width:80px; height:10px;  font-size:6pt; color:#a1a1a1; z-index:2; } </style> <script type="text/javascript"> /*<![CDATA[*/ function pad(image, n) {   if (!n) { n = 0; }   if (n > 5)   {     if (image.height == 1)     {       image.src = 'http://ecx.images-amazon.com/images/G/01/associates/2005/OM/NoImageAvailable_60x60.gif';     }     return;   }   if (image.height > 1 && image.width > 1)   {     var l = Math.ceil( (56 - image.width)  / 2);     var r = Math.floor((56 - image.width)  / 2);     var t = Math.ceil( (50 - image.height) / 2);     var b = Math.floor((50 - image.height) / 2);     if (l > 0) { image.style.paddingLeft   = l + 'px'; }     if (r > 0) { image.style.paddingRight  = r + 'px'; }     if (t > 0) { image.style.paddingTop    = t + 'px'; }     if (b > 0) { image.style.paddingBottom = b + 'px'; }   }   else   {     setTimeout(function() { pad(image, n++) }, 100);   } }    function doImgPadding() {      var imgs = document.getElementsByTagName("img");    var a = 0;    for (i = 0; i < imgs.length; i++)    {      var img = imgs[i];      if(img.className == "productImage")      {         pad(img);        img.style.visibility = 'visible';       }    } }  /*]]>*/ </script> <title>Amazon.com</title> </head> <body onload="doImgPadding();"> <div id="amazoncontent"> <div id="logo"> <a href="http://www.amazon.com/?&amp;tag=deloriesoftware&amp;camp=211493&amp;creative=379985&amp;linkCode=ez&amp;adid=0SS7BPXRMVJSE0M66VQX&amp;" target="_top"><img src="http://ecx.images-amazon.com/images/G/01/associates/2006/OM/headers/logo_bs_80x60.gif" alt="Amazon.com" /></a> </div> <table> <tr>  <td class="separator"> <div class="product">  <p class="details"><a href="http://www.amazon.com/dp/B005J7YBRW?tag=deloriesoftware&amp;camp=211493&amp;creative=379985&amp;linkCode=ez&amp;creativeASIN=B005J7YBRW&amp;adid=0SS7BPXRMVJSE0M66VQX&amp;" target="_top"><img class="productImage" src="http://ecx.images-amazon.com/images/I/31XwhHrJsSL._SL50_.jpg" alt="Amazon.com" /><span class="title">Toshiba Canvio 1.0 TB US...</span> <span class="author">Toshiba</span>  <span class="price">New $59.99</span>   </a> </p> </div> </td>  <td> <div class="product">  <p class="details"><a href="http://www.amazon.com/dp/B00DQGIHNW?tag=deloriesoftware&amp;camp=211493&amp;creative=379985&amp;linkCode=ez&amp;creativeASIN=B00DQGIHNW&amp;adid=0SS7BPXRMVJSE0M66VQX&amp;" target="_top"><img class="productImage" src="http://ecx.images-amazon.com/images/I/41x8TP-OZRL._SL50_.jpg" alt="Amazon.com" /><span class="title">2-Year Protection Plan p...</span> <span class="author">Square Trade, Inc....</span>  <span class="price">New $34.99</span>   </a> </p> </div> </td>  </tr> </table> <div id="privacy"> <a href="http://www.amazon.com/gp/dra/info" target="_top"><img src="http://ecx.images-amazon.com/images/G/01/associates/transparent-pixel.gif" style="border:none;width:80px;height:12px;" alt="Amazon.com"/></a> </div> </div>     <script> function encodeStr(b) { return b && encodeURIComponent(b).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); } function replaceTagUrls(allLinks) { var refRefurl = new RegExp("^http://.*(amazon|endless|myhabit|amazonwireless|javari|smallparts)\.(com|ca|co\.jp|de|fr|co\.uk|cn|it|es)/.*tag=.*linkcode=", "i");      var pageUrl = (window.location != window.parent.location) ? document.referrer: document.location; for (var i=0; i < allLinks.length; i++) { var href = new String(allLinks[i].href); var results; var tag_match; var newUrl; if (results = href.match(refRefurl)) { newUrl = href + "&ref-refURL=" + encodeStr(pageUrl); href = newUrl; allLinks[i].href = href; } } } function replaceAllURLs() { var allAHrefLinks = document.getElementsByTagName('a'); var allAreaHrefLinks = document.getElementsByTagName('area'); replaceTagUrls(allAHrefLinks); replaceTagUrls(allAreaHrefLinks); } replaceAllURLs(); </script></body> </html> 
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=logo_bs_80x60.gif
+Content-Type: image/gif; name=logo_bs_80x60.gif
+Content-Location: http://ecx.images-amazon.com/images/G/01/associates/2006/OM/headers/logo_bs_80x60.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODlhUAA8APf/AAABAAACAAcAAAEEAAIFAQQHAgUIBAcJBQoJABAGAAgLBxII
+AA8JBwoMCBMKAAsNChQMAwwPCxcNAA4QDA8RDRkQABASDxcQCBETEBIUERMUEhsT
+BCASABQVExUWFCIUARYYFRcYFicYARobGRsdGysbAB0fHB4fHR8gHjIcACAhHzMe
+ACEjITYgAiMkIiQlIyUnJScoJigpJz0mADkoDCkrKEAoACosKSwtKy0uLEYpAy4v
+LUorAC8xLjAyLzEzME0uAjIzMU8vADM0MjQ2M0syDTU3NDY4NTc5NlQ0Ajg5N1Y1
+ADk6ODo7OTs9Ol43ATw+Oz0/PD5APWI6AEBBP0FCQEFDQWY+AERGQ0VHRGtBAEZI
+RUdJRkhJR3NDAEpLSUpMSkxOS3dGA3hHAE1PTE5QTXtJAFBST1FTUFJUUVNUUlRV
+U1VWVFZXVYNQAFZYVVlbWFpcWY5TAltdWlxeW11fXI5YBF5gXZNXAF9hXmBiX5VZ
+AGFjYJZaAGJkYZRdAJhcAWNlYmRlY5pdAmVmZJxeAGZnZWdoZmhpZ2hqZ2psaadi
+AWxua21vbKtlAG9xbnFzcLBpAHJ0cXN1cnR2c7VtAHZ4dbVuBXd5drdvALhwAHl7
+eLlxAMBwAHt9enx+e31/fMNzBH6AfX+BfsZ1AICCf4GDgIKEgct5AISGg4aIhc98
+A4eJhtF+AIiKh4qMidh+ANaCAIyOi5GTkJSWk5WXlOeKAJeZlumMApmbmO6PAJud
+mZyem52fnKCin/qUBfyVAKOloaSmo6WnpKeppqiqp6mrqKqsqautqqyuq62vrK6w
+rbGzsLO1srS2s7a4tbi6t7m7uLu9ury+u77AvcDCv8LEwcPFwsTGw8bIxcfJxsjK
+x8rMycvOys3PzNDTz9PV0tTW09XX1NbY1dja1tnb2Nze2t3f3N7g3d/h3uDi3+Lk
+4eTm4+Xn5Obo5efp5unr6Ors6evu6u3w7O/x7vHz8PL08fP18vT38/b49Pf59vj6
+9/n7+Pr8+fv9+v3//CH5BAAAAAAALAAAAABQADwAAAj+AAMIHEiwoMGDCBMqXMiw
+ocOHECNKnEixosWLGDNq3Mixo8ePIEOKHEmypMmTKFOqXMmypcuXMGPKnEmzps2b
+OA82qCKJ0hkPARpkQdKDThwLKOa8GSEQw5dJlLg0CACCy5kzaMqgCMoF0RoTAQoE
+iaKiy6EgBE8YkiRlaoAdiiBFKXAgB4wvkuYegdSGwhE1AQAw2ASuXr1zqTTECIdt
+mjt3tIY9rsWgg6py9OqBw8Sgy7VzoM+1YVBKXDx0xGQw2JXtGLh40YYEEDDCWLVk
+09QwYDLNGTNrazTcIsbLGTZBvIxtg0StWuAmhQVZcndOBg59/apZ01dvG7R69Fz+
+VLHnTZCrfdtkvEA0ido/dF++UEfE7N4rBs76lTMWjx4iAAJMgk4QKsiyzAjJPPPC
+Cb6AM4Iz0DSBAjbetDFCLd0I0sZsDFSxRofavLODDJp1UcVjTTSxjT5BhKAGFR5U
+cU84QwggQAjp1GOKALzow4sAbbjzjgrJ6GMKA8vcI4pg0/RiIxWsdOHOITY24U4V
+yshiIy/gaCCAIOMwIACADDQhTDnu0CMiDvZkowQTj7kwRDb31NgFMuO4s884NWpQ
+DD/MqCAAM/qoIkAV4/CzwzHvtCHAMPaAIsAL3nxio41SdmGjCu4gcsyOAtAyjY1s
+lMMAAABCR88piIDzTg7+MtijzRBDPPaCEtrss4OU7ngiiD7hKMEAIvSco6kAyhR6
+KDiKHhOPo5Ba6gI4oAjEwAhSfmEjCp0aM4qNtGBjYxumAjAbJfSMIwAVpikR6zZK
+KPGYCkNss08Mp/TjCwNf6DMOFV2A8085prShwiz3DAPkYycsAw+09ljKADTCYPoK
+Fe40gqk7VBhTio21XDNuuTaiGw8lw+jDzygx3LPNEEE8FoMS9sowyj/gjFJNP/5t
+Qs8//+gzpRrxuDOKM/rIwkAzzwpQTKQq7LDJOEyosEsxJygTjQwqDFPNCM18LMAt
+2BgAZDkPCCTADtPQ4840xoAjSAxvBzEEOOBEHU3+PDKo6g4yw4CjBiLDICIIIsQg
+woAo78TzjjIyCLCMO2wIsIs7myDSSxDIbPNMNdoysU010WTTBZKY2DjLMzaq0c2p
+lzKQgOw2fiBAArHHLqYADPTOu40L6LBHJ3K0sHvvvvN+PPK7e5C88smLSeapZJp7
+6fU2PrGIDrZj7z32LZghxx62mJH79V5+rzv2u49gLoCoxm+u2r9j/0QkizyRggTf
+H28jAyUAghY+kIkp8C4EvHOeAE4gCBcY4AEA8JIGAABBBuygCg+o4KU0YArBNICC
+EwSAAQAwghigynuzEUAK5EAKUuzhCkBIAQcu0ADlfUAEM9CCHDrRCTHowBH+tpPB
+F0wEiS4M4RClkEEIvpCDFwmiCYLQgCDKIggqvCgIALBiMkLQBkGgYBNrqEITwICD
+IXABVYGRn0AAdAEg7AEWuohFKC5xiUEAog+OuEQoVmGLULhhBgXQwhQKIABDIKIW
+ggAFIm5RBVBEzhWuAIMouiCIYIxgFgJAgSeC8AxEqEEAnqDCMYZgCUN0wRldqIUo
+XvEF6aURjbM5oY0ukAIxOCIWugDGL4ChS1ygYhBJEMHuPrAAAIFiFL5ggyAO1wte
+RK6SIbAELQ7nimMIQAWCCIEqMKEpQ5yiGjJwRS2G0IsXyAIRqahCHeb3yoGg8Z0F
+QMACKkBPem7gAgj+cOX7Tog83Wmgd5RwlAC8xAANpE9M0fNdQQcKPd6xk52vPOFs
+0jim+KUwMO6kn/r+JyjvnRB+sqyfRyGKkPdldI0kxega3flRWYa0og+N6CvHhFH5
+wfIhKW2ITS0aUTWuFKXtfOg+cwqSod4UqEc9yDuVmpKl5uSpUI2qVKdK1apadSY7
+zapWt8rVrnr1q0IFq1jHStavsnSrvkirL3a61rJqta1ZhStYz/rW+MnVrVy9q13L
+Ste47hUAaQWsYFHV1sDatbB/JSxhDavWxZoVpWhtrGIHu9a7Ipayg/3rZTfr1b6y
+9bOYhatkLZvZyXIWs131rE31ulnGmta0htUs7GtRy1XVyo+1k82sWkUrV9yilreP
+7SleyarX4WaVIRVFrgAe4guYEBWqAQEAOw==
+
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=31XwhHrJsSL._SL50_.jpg
+Content-Type: image/jpeg; name=31XwhHrJsSL._SL50_.jpg
+Content-Location: http://ecx.images-amazon.com/images/I/31XwhHrJsSL._SL50_.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8L
+CwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUF
+BQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4e
+Hh4eHh4eHh4eHh4eHh7/wAARCAAyACkDASIAAhEBAxEB/8QAGwABAAMBAAMAAAAA
+AAAAAAAAAAcICQQBBQb/xAAxEAABAwIEAgcIAwAAAAAAAAABAAIDBAUGBwgREkET
+IScxUXGzFDdCYnSRsbJhg8H/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAA
+AAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8At9fLrbrHap7rdqyKjoqdvFLNK7Zr
+Qo2rNQ+UtMdjibpT3ARUkr9/s1edWXXkRf8A+n1WrPuRBey7aoMsLfLJCXXqokjO
+zmw0Q7/NzgF05c6icF44xZBh630F4pJqg8MMlVFGGudyB4XkjfZUFcpN0vntow8P
+GsZ/qDRFERBFmq4b5E4g8ovVas+3haD6qRvkXiAfLF6jVn69qDlcFJOmL324bHjW
+N/BUdPapH0xjtuw19YP1cg0RREQRlqiG+R2IB8kfqNVAZGrSzMPDFNjLB1xw3Vzv
+girY+HpWDcsIIIO3PrCrvNpVudM5xoMU2+oB+Gqojsfsf5QVTkapF0yjtvw19WP1
+cvurrpVzAZK+SiuVjqGkkhnTPZt5btP5XtMnMgsycNZk2283KnoaWlonmUztqmv3
+PCQAAOvnzCC4CLloYayNg9qqhK7mGtAC6kBERAREQEREH//Z
+
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=41x8TP-OZRL._SL50_.jpg
+Content-Type: image/jpeg; name=41x8TP-OZRL._SL50_.jpg
+Content-Location: http://ecx.images-amazon.com/images/I/41x8TP-OZRL._SL50_.jpg
+Content-Transfer-Encoding: Base64
+
+/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8L
+CwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUF
+BQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4e
+Hh4eHh4eHh4eHh4eHh7/wAARCAAyADIDASIAAhEBAxEB/8QAGwAAAwACAwAAAAAA
+AAAAAAAAAAYHAgUDBAj/xAAzEAABAwMCAwcDAQkAAAAAAAABAgMEAAURBhITITEH
+FCJBUYGRFWFxsSYyQmJyc6HR4f/EABkBAAMBAQEAAAAAAAAAAAAAAAAFBgQBB//E
+ACcRAAEDAwIGAgMAAAAAAAAAAAEAAhEDBCEFMQYSQXGB0RNhFGLh/9oADAMBAAIR
+AxEAPwD2XSTrPXitN3ExRZXbgAkKPBeCVfBGD807VHu1QftUv+2mk+uahUsLQ1qQ
+BMjdMtKs2Xdx8TziDsmay9qFjuISHrfdoCz1TJZQMe6VGmRGpbGpnim5R0j0UsA/
+FRay9wFyaVc93dU5KwnOVYBwOXqcVtLsxDe0wxdG4LcJ5cotJSgnDiAM5wT5Hlmp
+ujxXc1KTnhjZE4kziPeM5Tqpw/QZUDOZ0HrA+/ScdTdo8K3RnFWyJ9QdSkkAu7E/
+ODTJoy7q1BpO1XtbSWVTorb6m0nIQVJBIz9qgkwgRHiegbV+lWrslaUx2Y6baWMK
+FtZyPTwA044e1itqYqGqAOWIj7lLtZ02lYlgYSZnfwmiiiiqRJEVJe11ot6jaWej
+rII9jg1WqRO2i0uytNpu8RtTki2KLqkJGStk/vj8geIfiletWZvLKpSbvEjuM/xb
+9MuRbXTKh269jhT7TjMB68x0XN5LMTJLilHAIAzj3OBWx1gRIKZQvEGUlKg21GjB
+QDSMHGAQBjl/mupp27wEQWSsIWhaysOhAUdhQcYP9WD7VsYt1s0ePs4a3HEt7d5b
+HiKnErUfYBQ+4/NeZ0G0vxjRc4CcmZBkRjfPWJG6t6pqfOKjWkxgbR32x0SjOaW/
+EcjtAlx4cNAHqrkP1r0TZ4ibfaYkFAATHYQ0MfygCpn2cacM66ouslvEZhfEbBGN
+yv4fg8/aqtVzwpYutrLndu8z46e/KluILoV7nlbs0R56ooooqnSJdO+SHItmmSWS
+A42ypSTjOCBUQn621qh08CWXo+0BQKE5JJ5+XkKuV0i99t0iJu2cZtSN2OmRUzl2
+RnTiTFuF4hoLoLg3RnF4GCM+EEDoevnXQuKXxXbgwFobtAZQtRWAnOAVDdyAGAMn
+GB0z0xXMxLuys5tZG0ZJJ+4/2T7GqLFmW0sOJF2hrERlAdUYT2UJBQgHp6qHT7ny
+okuwGZ6lSLzBYc4vCLSoTh3EBQHIDoeZ+PIisjtPtHuLnUmkn9R6Wht5cNHK2oQO
+5SnB1prqNiMjPDSSQppCQkJCQR5dc8qqnZhebjdos36hIL6mlp2KKQCAQeXIfalW
+I7BcUWBdoqFSXglAVDcGSCAk5A6EgfPPFPOhtNuaeYkoekofU8oHwpwAAP8Ata8A
+QFnymOiiiuLqKwW00te5bSFKxjJSCcUUUIWCo0faod3a8QwfAOdHdYxXvMdkq9dg
+zRRQhZd3YyDwW8jodo5VyUUUIRRRRQhf/9k=
+
+------------R0v3rAKLNEisWxsdM4VBv7
+Content-Disposition: inline; filename=transparent-pixel.gif
+Content-Type: image/gif; name=transparent-pixel.gif
+Content-Location: http://ecx.images-amazon.com/images/G/01/associates/transparent-pixel.gif
+Content-Transfer-Encoding: Base64
+
+R0lGODlhAQABAPABAMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==
+
+------------R0v3rAKLNEisWxsdM4VBv7--

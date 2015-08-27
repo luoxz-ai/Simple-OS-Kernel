@@ -1,0 +1,7 @@
+Turbo C  Version 2.01  Copyright (c) 1987, 1988 Borland International
+process.c:
+Warning process.c 115: Parameter 'saved_bp' is never used in function SaveContext
+Warning process.c 220: Non-portable pointer assignment in function InitProcessTable
+Warning process.c 249: Non-portable pointer assignment in function InitProcessTable
+Warning process.c 274: Non-portable pointer assignment in function InitProcessTable
+Error process.c 309: Unable to execute command 'tasm.exe'

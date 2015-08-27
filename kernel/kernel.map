@@ -1,0 +1,8 @@
+
+ Start  Stop   Length Name                   Class
+ 00000H 01D55H 01D56H _TEXT                  CODE
+ 01D56H 01F0DH 001B8H _DATA                  DATA
+ 01F0EH 01F0EH 00000H _BSS                   BSS
+
+ Origin   Group
+ 0000:0   DGROUP

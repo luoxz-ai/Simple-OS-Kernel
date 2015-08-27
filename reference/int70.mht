@@ -1,0 +1,251 @@
+Content-Type: multipart/related; start=<op.mhtml.1388485850878.4550d76301786fc7@192.168.0.199>; boundary=----------IbRjrxJGp57cVaNEJ5i3pP
+Content-Location: http://www.compuphase.com/int70.asm
+MIME-Version: 1.0
+
+------------IbRjrxJGp57cVaNEJ5i3pP
+Content-Disposition: inline; filename=int70.htm
+Content-Type: text/html; name=int70.htm
+Content-ID: <op.mhtml.1388485850878.4550d76301786fc7@192.168.0.199>
+Content-Location: http://www.compuphase.com/int70.asm
+Content-Transfer-Encoding: 8bit
+
+;  INT70
+;
+;  Demonstrates the use of the Real Time Clock interrupt. This program doesn't
+;  use BIOS services or the BIOS data area, but goes to the hardware directly.
+;  The IRQ masks of both PICS are also reprogrammed, since some BIOS
+;  implementations leave the Real Time Clock IRQ off by default.
+;
+;  Also demonstrates that the interrupt doesn't have to tick at 1024 Hz per se.
+;  The base frequency is 32768 Hz (and the IBM technical reference says it
+;  should remain that value). The lowest 4 bits of status register A divide the
+;  square-wave output frequency (and the interrupt rate). The interrupt rate
+;  is: [32768 SHR (rate-1)] where "rate" is the value of the lowest 4 bits.
+;  This value must be between 3 (8,192 Hz) and 0fh (2 Hz). The default value
+;  of "rate" is 6, giving the default interrupt rate of 1024 Hz.
+;  Adjusting the interrupt frequency does not offset the time of the Real Time
+;  clock. You can set any supported interrupt rate, and the time is maintained
+;  correctly.
+;
+;  The normal way to use the Real Time Clock is by calling the "Wait Event"
+;  function of interrupt 15h. This works, but has some drawbacks:
+;  - It fails if an int 70h hook is already installed (i.e. there is a nested
+;    call to the "Wait Event" function).
+;  - It requires a memory address where it can toggle a bit.
+;  - It turns the timer IRQ off after the time-out specified with the "Wait
+;    Event" function.
+;  - It modifies the BIOS data area, and may therefore give problems in
+;    protected mode. (Note: this program also modifies the BIOS data area, but
+;    only to enhance compatibility with the BIOS. It is not required for the
+;    operation of the program.)
+;
+;  Assembled with MASM 6.0
+;
+;  August 5, 1993
+;  Thiadmer Riemersma (ITB CompuPhase, The Netherlands)
+;  CompuServe: 100115,2074
+; -----
+
+.MODEL  SMALL
+
+.STACK  400h                    ; 1K bytes is definitly enough
+
+.DATA
+err_msg db      "Real Time Clock not present or disabled",13,10,"$"
+
+.CODE
+
+old70int dd     0
+
+main    PROC
+        mov     ax, @data               ; set ds=@data
+        mov     ds, ax
+
+        call    checkrtc                ; detect presence of the RTC
+        jc      error
+
+        call    installisr              ; set up ISR and RTC
+
+        mov     ax, 0                   ; wait until a key is pressed
+        int     16h
+
+        call    uninstallisr
+
+        mov     ax, 0                   ; wait for another key
+        int     16h
+        jmp     short quit
+
+    error:
+        mov     dx, offset err_msg
+        mov     ah, 9
+        int     21h
+
+    quit:
+        mov     ax, 4c00h               ; terminate program
+        int     21h
+main    endp
+
+
+PAUSE   equ     <jmp short $+2>         ; short pauses
+
+;  These macros were constructed by analyzing the system BIOS. It is important
+;  to:
+;  - disable interrupts while reading/writing CMOS values (even the NMI)
+;  - leave the index register (70h) pointing at status register D (index 0dh)
+;  - insert a pause between reading and writing to the ports
+;  - always access port 71h (by reading or writing) after setting the index of
+;    the index register (70h)
+; -----
+ReadRTC macro   index
+        pushf                   ;; save flags
+        cli                     ;; no interrupts while changing CMOS values
+        mov     ax, index
+        or      al, 80h         ;; set NMI bit, disable even NMI
+        out     70h, al
+        PAUSE                   ;; pause between accessing RTC ports
+        in      al, 71h
+        push    ax              ;; save value read at indicated index
+        PAUSE
+        mov     al, 0dh         ;; leave index at status register D, and...
+        out     70h, al         ;; ...enable NMI again
+        PAUSE                   ;; *always* read/write port 71h after...
+        in      al, 71h         ;; ...writing to port 70h
+        pop     ax
+        popf                    ;; restore flags (includes the interrupt flag)
+endm
+
+SetRTC  macro   index, value
+        pushf                   ;; save flags
+        push    ax
+        cli                     ;; No interrupts while changing CMOS values
+        mov     ax, index
+        or      al, 80h         ;; set NMI bit, disable even NMI
+        out     70h, al         ;; write index
+        PAUSE
+ifdifi  <value>, <al>
+        mov     al, value       ;; value is not "al", move it into al
+else
+        pop     ax              ;; value is "al", restore "al" from the stack
+        push    ax              ;; save ax again
+endif
+        out     71h, al         ;; write value at indicated index
+        PAUSE
+        mov     al, 0dh         ;; leave index at status register D, and...
+        out     70h, al         ;; ...enable NMI again
+        PAUSE                   ;; *always* read/write port 71h after...
+        in      al, 71h         ;; ...writing to port 70h
+        pop     ax              ;; restore ax
+        popf                    ;; restore flags (including interrupt flag)
+endm
+
+
+checkrtc proc
+        ;  First check BIOS for Real Time Clock support
+        ;  BUG: IBM PS/2 model 30 (8086 version) has a real time clock, but one
+        ;       that is not compatible with the AT RTC. We do not detect this.
+        mov     ax, 0c0h
+        int     15
+        jc      error                   ; function failed, quit with error
+        mov     al, es:[bx+5]           ; get "Feature information 1"
+        test    al, 10h                 ; check for presence of the RTC
+        jz      error                   ; not present
+        clc                             ; RTC present
+        ret
+    error:
+        stc
+        ret
+checkrtc endp
+
+
+installisr proc
+        ;  Install ISR for Real Time Clock (RTC)
+        mov     ax, 3570h               ; get interrupt vector 70h (RTC)
+        int     21h
+        mov     word ptr cs:[old70int], bx ; store the curent vector
+        mov     word ptr cs:[old70int+2], es
+        mov     dx, offset cs:int70proc ; new ISR for int 70h
+        push    ds                      ; save ds
+        mov     ax, @code
+        mov     ds, ax                  ; copy CS to DS
+        mov     ax, 2570h               ; set interrupt vector nr. 70h
+        int     21h
+        pop     ds                      ; restore ds
+
+        ;  Now initialize the RTC
+        ReadRTC 0bh                     ; read status register B
+        or      al, 40h                 ; set periodic interrupt bit
+        SetRTC  0bh, al
+        ReadRTC 0ch                     ; clear pending interrupt with a read
+
+        ;  Alter the interrupt rate (to the slowest rate: 2 ticks/second)
+        ReadRTC 0ah                     ; alter the interrupt rate
+        and     al, 0f0h                ; clear "rate selection bits"
+        or      al, 0fh                 ; set rate selection to 2 ticks/second
+        SetRTC  0ah, al
+
+        ;  Finally, initialize the secondary PIC
+        cli                             ; no interrupts while programmning PIC
+        in      al, 0a1h                ; read mask of secondary PIC
+        and     al, 0feh                ; clear bit 0 (IRQ8=RTC)
+        PAUSE                           ; pause between reads and writes
+        out     0a1h, al                ; store mask
+        sti                             ; re-enable interrupts
+        ret
+installisr endp
+
+
+uninstallisr proc
+        ;  Clean up the RTC
+        ReadRTC 0bh                     ; read status register B
+        and     al, 0bfh                ; clear periodic interrupt bit
+        SetRTC  0bh, al
+        ReadRTC 0ah                     ; reset the interrupt rate
+        and     al, 0f0h                ; clear "rate selection bits"
+        or      al, 06h                 ; set rate selection to 1024 Hz
+        SetRTC  0ah, al
+
+        ;  Reset interrupt vectors
+        push    ds                      ; save ds
+        mov     ax, 2570h               ; reset int 70h
+        lds     dx, cs:[old70int]       ; ds:dx -> old interrupt vector
+        int     21h
+        pop     ds                      ; reset ds
+
+        ;  Most BIOSes never reset the secondary PIC, so we don't either. IRQ 8
+        ;  is no longer generated anyway.
+        ret
+uninstallisr endp
+
+
+;  The new int 70h ISR. Toggles the "speaker enable" bit to get an audible
+;  indication that the ISR works.
+;
+;  Note:
+;  We don't call the previous interrupt 70h handler, because the default
+;  handler in the BIOS adjusts fields in the BIOS data area and may switch
+;  itself off after a specified time-out. The problems for dealing with the
+;  default interrupt handler is probably the main reason that the RTC is not
+;  more widely used.
+; -----
+int70proc proc   FAR
+        push    ax
+        push    es
+        in      al, 61h                 ; read current value of register 61h
+        xor     al, 2                   ; toggle 2nd bit
+        out     61h,al                  ; enable/disable speaker
+
+        ReadRTC 0ch                     ; read status register C to clear...
+                                        ; ...pending interrupt
+        cli                             ; avoid interrupts between both EOIs
+        mov     al, 20h                 ; send non-specific EOI...
+        out     0a0h, al                ; ...to secondary PIC (slave) and...
+        out     20h, al                 ; ...to primary PIC (master)
+        pop     es
+        pop     ax
+        iret
+int70proc endp
+
+
+        end main
+
+------------IbRjrxJGp57cVaNEJ5i3pP--

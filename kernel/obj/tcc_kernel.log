@@ -1,0 +1,4 @@
+Turbo C  Version 2.01  Copyright (c) 1987, 1988 Borland International
+kernel.c:
+Warning kernel.c 45: Non-portable pointer conversion
+Error kernel.c 72: Unable to execute command 'tasm.exe'

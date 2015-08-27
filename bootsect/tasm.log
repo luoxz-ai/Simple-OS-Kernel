@@ -1,0 +1,11 @@
+Turbo Assembler  Version 3.0  Copyright (c) 1988, 1991 Borland International
+
+Assembling file:   bootsect.asm
+*Warning* bootsect.asm(73) Argument needs type override
+*Warning* bootsect.asm(144) Argument needs type override
+*Warning* bootsect.asm(145) Argument needs type override
+Error messages:    None
+Warning messages:  3
+Passes:            1
+Remaining memory:  422k
+
